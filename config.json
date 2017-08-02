@@ -1,0 +1,6 @@
+{
+    "token": "token",
+    "MaxNameLength": 10,
+    "Seperator": "> ",
+    "HistoryLength": 50
+}
