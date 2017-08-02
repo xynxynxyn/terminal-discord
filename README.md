@@ -34,6 +34,8 @@ __q__ or __quit__: exits the client
 
 __u__, __update__, __r__, __refresh__: refreshes manually
 
+__nick__: changes your nickname
+
 __d__, __delete__: deletes the last sent message
 
 __e__, __edit__: replace the content of your last sent message with the string after /e
