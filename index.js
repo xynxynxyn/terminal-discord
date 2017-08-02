@@ -158,6 +158,11 @@ function showMessage(message) {
     }
     var timestamp = hour + ':' + min
     var author = message.author.username;
+    var attachment = '';
+    if(message.attachments.array().length > 0){
+        //var pics = message.attachments.array();
+        var attachment = message.attachments.array()[0]['url'];
+    }
     if(author.length<MaxNameLength){
         var x = MaxNameLength - author.length;
         for(var i=0; i<x; i+=1){
@@ -166,7 +171,7 @@ function showMessage(message) {
     }else if(author.length>MaxNameLength){
         author = author.slice(0,MaxNameLength);
     }
-    console_out(timestamp + ' ' + author + seperator + ' ' + content);
+    console_out(timestamp + ' ' + author + seperator + attachment + ' ' + content);
 }
 
 
