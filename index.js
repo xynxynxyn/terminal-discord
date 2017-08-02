@@ -87,12 +87,6 @@ function command(cmd, arg) {
         case 'r':
             history(channel);
             break;
-        case 'clear':
-        case 'cls':
-        case 'clr':
-        case 'c':
-            clear();
-            break;
         case 'd':
         case 'delete':
             var last_message = channel.guild.me.lastMessage;

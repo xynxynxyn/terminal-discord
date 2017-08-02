@@ -1,0 +1,25 @@
+{
+  "name": "terminal-discord",
+  "version": "1.0.0",
+  "description": "terminal discord",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "prompt-sync": "^4.1.5",
+    "readline-sync": "^1.4.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xynxynxyn/terminal-discord.git"
+  },
+  "author": "NyxNyxNyx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xynxynxyn/terminal-discord/issues"
+  },
+  "homepage": "https://github.com/xynxynxyn/terminal-discord#readme"
+}
