@@ -27,39 +27,49 @@ client.on('ready', () => {
         console_out('['+i+']'+' '+guilds[i].name);
     }
     rl.question('Choose Guild ', function(index){
-        var guild = guildList()[index];
-        console_out('Available Channels');
-        var channels = channelsList(guild);
-        for(var i=0; i<channels.length; i++){
-            console_out('['+i+']'+' '+channels[i].name);
-        }
-        rl.question('Choose Channel ', function(index){
-            channel = channels[index];
+        if(-1<index && index<guildList().length){
+            var guild = guildList()[index];
+            console_out('Available Channels');
+            var channels = channelsList(guild);
+            for(var i=0; i<channels.length; i++){
+                console_out('['+i+']'+' '+channels[i].name);
+            }
+            rl.question('Choose Channel ', function(index){
+                if(-1<index && index<guildList().length){
+                    channel = channels[index];
 
-            //clears window, fetches the last n messages and display them
-            history(channel);
-
-            //when a message is recieved display the last n messages
-            client.on('message', message => {
-                if(message.channel == channel){
+                    //clears window, fetches the last n messages and display them
                     history(channel);
-                }
-            });
 
-            //start listening
-            rl.on('line', function(line) {
-                if(line[0] == '/' && line.length>1){
-                    //check for command
-                    var cmd = line.match(/[a-z]+\b/)[0];
-                    var arg = line.substr(cmd.length+2, line.length);
-                    command(cmd, arg);
+                    //when a message is recieved display the last n messages
+                    client.on('message', message => {
+                        if(message.channel == channel){
+                            history(channel);
+                        }
+                    });
+
+                    //start listening
+                    rl.on('line', function(line) {
+                        if(line[0] == '/' && line.length>1){
+                            //check for command
+                            var cmd = line.match(/[a-z]+\b/)[0];
+                            var arg = line.substr(cmd.length+2, line.length);
+                            command(cmd, arg);
+                        }else{
+                            //send a message
+                            channel.send(line);
+                            rl.prompt(true);
+                        }
+                    });
                 }else{
-                    //send a message
-                    channel.send(line);
-                    rl.prompt(true);
+                    console_out('Invalid option');
+                    process.exit(-1);
                 }
             });
-        });
+        }else{
+            console_out('Invalid option');
+            process.exit(-1);
+        }
     });
 });
 
