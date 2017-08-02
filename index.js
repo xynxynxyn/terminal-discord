@@ -44,7 +44,11 @@ client.on('ready', () => {
                     //when a message is recieved display the last n messages
                     client.on('message', message => {
                         if(message.channel == channel){
-                            history(channel);
+                            if(message.author == client.user){
+                                history(channel);
+                            }else{
+                                showMessage(message);
+                            }
                         }
                     });
 
@@ -134,7 +138,6 @@ function console_out(msg) {
 function history(channel) {
     channel.fetchMessages({limit: HistoryLength})
         .then(messages => {
-            clear();
             for(var i=messages.size-1; -1<i; i--){
                 showMessage(messages.array()[i]);
             }
