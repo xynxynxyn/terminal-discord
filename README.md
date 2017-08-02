@@ -2,31 +2,31 @@
 
 A simple terminal based client for Discord based on the [discord.js](https://discord.js.org) API.
 
-##Config-File
+## Config-File
 
-###Token
+### Token
 
 Terminal-Discord uses a token to login rather than email and password since discord.js doesn't support that method anymore.
 To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navigate to the Application tab and find the token in the local storage.
 
 ![Token](https://my.mixtape.moe/taqhbx.png)
 
-###MaxNameLength
+### MaxNameLength
 
 The maximum length of usernames.
 Default is 10
 
-###Seperator
+### Seperator
 
 Seperator between username and message content.
 Default is "> "
 
-###HistoryLength
+### HistoryLength
 
 Number of messages loaded at a time.
 
 
-##Commands
+## Commands
 
 Enter a command while in a channel using /.
 
