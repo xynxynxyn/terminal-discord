@@ -52,8 +52,10 @@ client.on('ready', () => {
             command(cmd, arg);
         }else{
             //send a message
-            channel.send(line);
-            rl.prompt(true);
+            if(line != ''){
+                channel.send(line);
+                rl.prompt(true);
+            }
         }
     });
 })
@@ -200,7 +202,9 @@ function showMessage(message) {
     }
     if(colorsupport == true){
         var color = message.member.displayHexColor;
-        author = chalk.hex(color)(author);
+        if(color != '#000000'){
+            author = chalk.hex(color)(author);
+        }
     }
     console_out(timestamp + ' ' + author + seperator + attachment + ' ' + content);
 }
