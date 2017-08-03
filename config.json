@@ -1,6 +1,8 @@
 {
-    "token": "token",
-    "MaxNameLength": 10,
-    "Seperator": "> ",
-    "HistoryLength": 50
+    "token": "",
+    "MaxNameLength": 15,
+    "Seperator": ">",
+    "HistoryLength": 50,
+    "defaultGuild": null,
+    "defaultChannel": null
 }
