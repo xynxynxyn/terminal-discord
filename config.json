@@ -1,10 +1,11 @@
 {
-    "token": "token",
+    "token": "",
     "MaxNameLength": 10,
     "Seperator": ">",
     "HistoryLength": 50,
     "defaultGuild": null,
     "defaultChannel": null,
     "prompt": ">",
-    "colorsupport": true
+    "colorsupport": true,
+    "date": false
 }

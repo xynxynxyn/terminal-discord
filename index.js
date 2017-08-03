@@ -15,6 +15,7 @@ var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
 var colorsupport = config.colorsupport;
 var channel;
+var datesupport = config.date;
 rl.setPrompt(config.prompt);
 
 
@@ -184,6 +185,9 @@ function showMessage(message) {
         min = '0' + min;
     }
     var timestamp = hour + ':' + min
+    if(datesupport){
+        timestamp = date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear() +  ' ' + timestamp;
+    }
     var author = message.author.username;
     var attachment = '';
     if(message.attachments.array().length > 0){
