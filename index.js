@@ -192,7 +192,7 @@ function showMessage(message) {
     var attachment = '';
     if(message.attachments.array().length > 0){
         //var pics = message.attachments.array();
-        var attachment = message.attachments.array()[0]['url'];
+        var attachment = ' ' + message.attachments.array()[0]['url'];
     }
     if(MaxNameLength != null){
         if(author.length<MaxNameLength){
