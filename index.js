@@ -122,6 +122,7 @@ function command(cmd, arg) {
         case 'refresh':
         case 'u':
         case 'r':
+            clear();
             history(channel);
             break;
         case 'd':
