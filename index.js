@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const readline = require('readline');
-const rl = readline.createInterface(process.stdin, process.stdout);
+const rlSync = require('readline-sync');
+var rl = readline.createInterface(process.stdin, process.stdout);
 
 var client = new Discord.Client();
 var config = JSON.parse(fs.readFileSync('config.json'));
@@ -15,74 +16,89 @@ var HistoryLength = config.HistoryLength;
 clear();
 login(token);
 
-
-//Main Program
 client.on('ready', () => {
+    console_out('User ' + client.user.username + ' successfully logged in');
+    channel = menu();
+    //clears window, fetches the last n messages and display them
+    history(channel);
 
-    //Channel selection menu
-    console_out('User ' + client.user.username + ' successfully logged in\n')
-    console_out('Available Guilds');
-    var guilds = guildList();
-    for(var i=0; i<guilds.length; i++){
-        console_out('['+i+']'+' '+guilds[i].name);
-    }
-    rl.question('Choose Guild ', function(index){
-        if(-1<index && index<guildList().length){
-            var guild = guildList()[index];
-            console_out('Available Channels');
-            var channels = channelsList(guild);
-            for(var i=0; i<channels.length; i++){
-                console_out('['+i+']'+' '+channels[i].name);
+    //when a message is recieved display the last n messages
+    client.on('message', message => {
+        if(message.channel == channel){
+            if(message.author == client.user){
+                history(channel);
+            }else{
+                showMessage(message);
             }
-            rl.question('Choose Channel ', function(index){
-                if(-1<index && index<guildList().length){
-                    channel = channels[index];
-
-                    //clears window, fetches the last n messages and display them
-                    history(channel);
-
-                    //when a message is recieved display the last n messages
-                    client.on('message', message => {
-                        if(message.channel == channel){
-                            if(message.author == client.user){
-                                history(channel);
-                            }else{
-                                showMessage(message);
-                            }
-                        }
-                    });
-
-                    //start listening
-                    rl.on('line', function(line) {
-                        if(line[0] == '/' && line.length>1){
-                            //check for command
-                            var cmd = line.match(/[a-z]+\b/)[0];
-                            var arg = line.substr(cmd.length+2, line.length);
-                            command(cmd, arg);
-                        }else{
-                            //send a message
-                            channel.send(line);
-                            rl.prompt(true);
-                        }
-                    });
-                }else{
-                    console_out('Invalid option');
-                    process.exit(-1);
-                }
-            });
-        }else{
-            console_out('Invalid option');
-            process.exit(-1);
         }
     });
-});
 
+    //start listening
+    rl.on('line', function(line) {
+        if(line[0] == '/' && line.length>1){
+            //check for command
+            var cmd = line.match(/[a-z]+\b/)[0];
+            var arg = line.substr(cmd.length+2, line.length);
+            command(cmd, arg);
+        }else{
+            //send a message
+            channel.send(line);
+            rl.prompt(true);
+        }
+    });
+})
 
+function menu() {
+    while(true){
+        console_out('\nAvailable Guilds');
+        var guilds = guildList();
+        for(var i=0; i<guilds.length; i++){
+            console_out('['+i+']'+' '+guilds[i].name);
+        }
+        console_out('[q] quit\n');
+        rl.close();
+        var guild_index = rlSync.question('');
+        readlineInit();
+        if(-1<guild_index && guild_index<guilds.length){
+            while(true){
+                var guild = guildList()[guild_index];
+                console_out('Available Channels');
+                var channels = channelsList(guild);
+                for(var i=0; i<channels.length; i++){
+                    console_out('['+i+']'+' '+channels[i].name);
+                }
+                console_out('[b] go back');
+                console_out('[q] quit\n');
+                rl.close();
+                var channel_index = rlSync.question('');
+                readlineInit();
+                if(-1<channel_index && channel_index<channels.length){
+                    var channel = channels[channel_index];
+                    return channel;
+                }else if(channel_index== 'b'){
+                    break;
+                }else if(channel_index == 'q'){
+                    process.exit(-1);
+                }else{
+                    console_out('Invalid option\n');
+                }
+            }
+        }else if(guild_index == 'q'){
+            process.exit(-1);
+        }else{
+            console_out('Invalid option\n');
+        }
+    }
+}
 
 
 
 
 //Functions
+
+function readlineInit() {
+    rl = readline.createInterface(process.stdin, process.stdout);
+}
 
 //Commands
 function command(cmd, arg) {
