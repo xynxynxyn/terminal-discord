@@ -25,6 +25,15 @@ Default is "> "
 
 Number of messages loaded at a time.
 
+### defaultGuild
+
+The index of the guild you want selected at startup.
+Default is null
+
+### defaultChannel
+The index of the channel you want selected at startup.
+Default is null
+
 
 ## Commands
 
