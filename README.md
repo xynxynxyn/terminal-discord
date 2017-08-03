@@ -1,6 +1,8 @@
 # Terminal-Discord
 
-A simple terminal based client for Discord based on the [discord.js](https://discord.js.org) API.
+![terminal-discord](https://my.mixtape.moe/hblbex.png)
+
+A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
 ## Config-File
 
@@ -14,29 +16,41 @@ To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navig
 ### MaxNameLength
 
 The maximum length of usernames.
+
 Default is 10
 
 ### Seperator
 
 Seperator between username and message content.
+
 Default is ">"
 
 ### HistoryLength
 
 Number of messages loaded at a time.
 
+Default is 50
+
 ### defaultGuild
 
 The index of the guild you want selected at startup.
+
 Default is null
 
 ### defaultChannel
 The index of the channel you want selected at startup.
+
 Default is null
 
 ### prompt
 The prompt used.
+
 Default is ">"
+
+### colorsupport
+Wether color for usernames is enabled or not.
+
+Default is true
 
 
 ## Commands
