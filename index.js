@@ -2,14 +2,15 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const readline = require('readline');
 const rlSync = require('readline-sync');
-var rl = readline.createInterface(process.stdin, process.stdout);
-
+const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
 var config = JSON.parse(fs.readFileSync('config.json'));
 var token = config.token;
 var MaxNameLength = config.MaxNameLength;
 var seperator = config.Seperator;
 var HistoryLength = config.HistoryLength;
+var defaultGuild = config.defaultGuild;
+var defaultChannel = config.defaultChannel;
 
 
 //login with user token
@@ -18,7 +19,11 @@ login(token);
 
 client.on('ready', () => {
     console_out('User ' + client.user.username + ' successfully logged in');
-    channel = menu();
+    if(defaultGuild != null && defaultChannel != null){
+        var channel = channelsList(guildList()[defaultGuild])[defaultChannel];
+    }else{
+        var channel = menu();
+    }
     //clears window, fetches the last n messages and display them
     history(channel);
 
@@ -56,9 +61,9 @@ function menu() {
             console_out('['+i+']'+' '+guilds[i].name);
         }
         console_out('[q] quit\n');
-        rl.close();
-        var guild_index = rlSync.question('');
-        readlineInit();
+        rl.pause();
+        var guild_index = rlSync.keyIn('');
+        rl.resume();
         if(-1<guild_index && guild_index<guilds.length){
             while(true){
                 var guild = guildList()[guild_index];
@@ -69,9 +74,9 @@ function menu() {
                 }
                 console_out('[b] go back');
                 console_out('[q] quit\n');
-                rl.close();
-                var channel_index = rlSync.question('');
-                readlineInit();
+                rl.pause();
+                var channel_index = rlSync.keyIn('');
+                rl.resume();
                 if(-1<channel_index && channel_index<channels.length){
                     var channel = channels[channel_index];
                     return channel;
@@ -95,10 +100,6 @@ function menu() {
 
 
 //Functions
-
-function readlineInit() {
-    rl = readline.createInterface(process.stdin, process.stdout);
-}
 
 //Commands
 function command(cmd, arg) {
@@ -136,6 +137,11 @@ function command(cmd, arg) {
                         .then(history(channel));
                 }
             }
+            break;
+        case 'm':
+        case 'menu':
+            channel = menu();
+            history(channel);
             break;
         default:
             console_out('Unknown command');
