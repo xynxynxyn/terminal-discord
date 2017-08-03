@@ -172,7 +172,11 @@ function command(cmd, arg) {
             clear();
             console_out('Online Users: ');
             for(var i=0; i<membersList.length; i++){
-                console_out('  ' + membersList[i].user.username);
+                var name = membersList[i].user.username;
+                if(membersList[i].nickname != undefined){
+                    name = membersList[i].nickname + ' (aka ' + name + ')';
+                }
+                console_out('  ' + name);
             }
             rl.pause();
             rlSync.keyIn('\n --enter any key to continue--');
