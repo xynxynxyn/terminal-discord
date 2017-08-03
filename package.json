@@ -4,6 +4,7 @@
   "description": "terminal discord",
   "main": "index.js",
   "dependencies": {
+    "chalk": "^2.0.1",
     "discord.js": "^11.1.0",
     "prompt-sync": "^4.1.5",
     "readline-sync": "^1.4.7"

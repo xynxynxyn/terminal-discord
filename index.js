@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const readline = require('readline');
 const rlSync = require('readline-sync');
+const chalk = require('chalk');
 const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
 var config = JSON.parse(fs.readFileSync('config.json'));
@@ -11,6 +12,7 @@ var seperator = config.Seperator;
 var HistoryLength = config.HistoryLength;
 var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
+var colorsupport = config.colorsupport;
 var channel;
 rl.setPrompt(config.prompt);
 
@@ -192,6 +194,10 @@ function showMessage(message) {
         }
     }else if(author.length>MaxNameLength){
         author = author.slice(0,MaxNameLength);
+    }
+    if(colorsupport == true){
+        var color = message.member.displayHexColor;
+        author = chalk.hex(color)(author);
     }
     console_out(timestamp + ' ' + author + seperator + attachment + ' ' + content);
 }
