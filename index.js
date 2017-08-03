@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const Discord = require('discord.js');
 const fs = require('fs');
 const readline = require('readline');
@@ -5,7 +6,7 @@ const rlSync = require('readline-sync');
 const chalk = require('chalk');
 const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
-var config = JSON.parse(fs.readFileSync('config.json'));
+var config = JSON.parse(fs.readFileSync('/home/youmu/Documents/tiscord/config.json'));
 var token = config.token;
 var MaxNameLength = config.MaxNameLength;
 var seperator = config.Seperator;
