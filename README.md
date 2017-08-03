@@ -40,5 +40,7 @@ __d__, __delete__: deletes the last sent message
 
 __e__, __edit__: replace the content of your last sent message with the string after /e
 
+__m__, __menu__: open the channel selection menu to switch to a different channel
+
 
 Note that edit and delete only work on messages sent in the current session. If you haven't sent a message in the current session the command will do nothing.
