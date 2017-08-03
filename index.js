@@ -15,7 +15,9 @@ var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
 var colorsupport = config.colorsupport;
 var channel;
+var usenick = config.usenick;
 var datesupport = config.date;
+var timesupport = config.time;
 rl.setPrompt(config.prompt);
 
 
@@ -203,19 +205,26 @@ function history(channel) {
 function showMessage(message) {
     var content = message.cleanContent;
     var date = message.createdAt;
-    var hour = date.getHours();
-    if(hour<10){
-        hour = '0' + hour;
+    var timestamp = '';
+    if(timesupport == true){
+        var hour = date.getHours();
+        if(hour<10){
+            hour = '0' + hour;
+        }
+        var min = date.getMinutes();
+        if(min<10){
+            min = '0' + min;
+        }
+        timestamp = hour + ':' + min
     }
-    var min = date.getMinutes();
-    if(min<10){
-        min = '0' + min;
-    }
-    var timestamp = hour + ':' + min
     if(datesupport){
         timestamp = date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear() +  ' ' + timestamp;
     }
-    var author = message.author.username;
+    if(message.member.nickname != undefined && usenick == true){
+        var author = message.member.nickname;
+    }else{
+        var author = message.author.username;
+    }
     var attachment = '';
     if(message.attachments.array().length > 0){
         //var pics = message.attachments.array();

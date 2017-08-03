@@ -52,6 +52,16 @@ Wether color for usernames is enabled or not.
 
 Default is true
 
+### usenick
+Wether the nickname should be displayed when available.
+
+Default is true
+
+### time
+Show the timestamp next to a message.
+
+Default is true
+
 ### date
 Enable date support to display DD.MM.YYYY in front of the time.
 

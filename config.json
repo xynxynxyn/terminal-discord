@@ -1,5 +1,5 @@
 {
-    "token": "",
+    "token": "token",
     "MaxNameLength": 10,
     "Seperator": ">",
     "HistoryLength": 50,
@@ -7,5 +7,7 @@
     "defaultChannel": null,
     "prompt": ">",
     "colorsupport": true,
+    "usenick": true,
+    "time": false,
     "date": false
 }
