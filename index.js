@@ -14,6 +14,7 @@ var HistoryLength = config.HistoryLength;
 var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
 var colorsupport = config.colorsupport;
+var mentionColor = config.mentionColor;
 var channel;
 var usenick = config.usenick;
 var datesupport = config.date;
@@ -245,11 +246,14 @@ function showMessage(message) {
             author = author.slice(0,MaxNameLength);
         }
     }
-    if(colorsupport == true){
+    if(colorsupport){
         var color = message.member.displayHexColor;
         if(color != '#000000'){
             author = chalk.hex(color)(author);
         }
+    }
+    if(message.isMemberMentioned(channel.guild.me) && colorsupport && mentionColor != null){
+        content = chalk.bgHex(mentionColor)(content);
     }
     console_out(timestamp + author + seperator + attachment + ' ' + content);
 }

@@ -2,12 +2,13 @@
     "token": "token",
     "MaxNameLength": 10,
     "Seperator": ">",
-    "HistoryLength": 50,
+    "HistoryLength": 70,
     "defaultGuild": null,
     "defaultChannel": null,
     "prompt": ">",
     "colorsupport": true,
+    "mentionColor": null,
     "usenick": true,
-    "time": false,
+    "time": true,
     "date": false
 }

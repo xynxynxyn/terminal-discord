@@ -52,6 +52,11 @@ Wether color for usernames is enabled or not.
 
 Default is true
 
+### mentionColor
+What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
+
+Default is null
+
 ### usenick
 Wether the nickname should be displayed when available.
 
