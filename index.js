@@ -149,6 +149,7 @@ function command(cmd, arg) {
             break;
         case 'm':
         case 'menu':
+            clear();
             channel = menu();
             history(channel);
             break;
@@ -215,7 +216,7 @@ function showMessage(message) {
         if(min<10){
             min = '0' + min;
         }
-        timestamp = hour + ':' + min
+        timestamp = hour + ':' + min + ' '
     }
     if(datesupport){
         timestamp = date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear() +  ' ' + timestamp;
@@ -246,7 +247,7 @@ function showMessage(message) {
             author = chalk.hex(color)(author);
         }
     }
-    console_out(timestamp + ' ' + author + seperator + attachment + ' ' + content);
+    console_out(timestamp + author + seperator + attachment + ' ' + content);
 }
 
 
