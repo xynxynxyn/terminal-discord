@@ -193,7 +193,7 @@ function command(cmd, arg) {
 
 //use this instead of console.log for clean lines
 function console_out(msg) {
-    //process.stdout.clearLine();
+    process.stdout.clearLine();
     process.stdout.cursorTo(0);
     console.log(msg);
     rl.prompt(true);
