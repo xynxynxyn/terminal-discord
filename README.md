@@ -15,7 +15,7 @@ To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navig
 
 ### MaxNameLength
 
-The maximum length of usernames.
+The maximum length of usernames. If the value is null no extra spaces will be added to names and the messages will not be alligned
 
 Default is 10
 

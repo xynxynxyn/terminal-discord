@@ -187,13 +187,15 @@ function showMessage(message) {
         //var pics = message.attachments.array();
         var attachment = message.attachments.array()[0]['url'];
     }
-    if(author.length<MaxNameLength){
-        var x = MaxNameLength - author.length;
-        for(var i=0; i<x; i+=1){
-            author = author + ' ';
+    if(MaxNameLength != null){
+        if(author.length<MaxNameLength){
+            var x = MaxNameLength - author.length;
+            for(var i=0; i<x; i+=1){
+                author = author + ' ';
+            }
+        }else if(author.length>MaxNameLength){
+            author = author.slice(0,MaxNameLength);
         }
-    }else if(author.length>MaxNameLength){
-        author = author.slice(0,MaxNameLength);
     }
     if(colorsupport == true){
         var color = message.member.displayHexColor;
