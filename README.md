@@ -19,7 +19,7 @@ Default is 10
 ### Seperator
 
 Seperator between username and message content.
-Default is "> "
+Default is ">"
 
 ### HistoryLength
 
@@ -33,6 +33,10 @@ Default is null
 ### defaultChannel
 The index of the channel you want selected at startup.
 Default is null
+
+### prompt
+The prompt used.
+Default is ">"
 
 
 ## Commands
