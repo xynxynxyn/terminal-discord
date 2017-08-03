@@ -129,7 +129,7 @@ function command(cmd, arg) {
             var last_message = channel.guild.me.lastMessage;
             if(last_message != undefined){
                 if(last_message.deletable){
-                    last_message.delete();
+                    last_message.delete()
                         .then(history(channel));
                 }
             }
@@ -139,7 +139,7 @@ function command(cmd, arg) {
             var last_message = channel.guild.me.lastMessage;
             if(last_message != undefined){
                 if(last_message.editable){
-                    last_message.edit(arg);
+                    last_message.edit(arg)
                         .then(history(channel));
                 }
             }
