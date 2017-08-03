@@ -11,6 +11,7 @@ var seperator = config.Seperator;
 var HistoryLength = config.HistoryLength;
 var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
+rl.setPrompt(config.prompt);
 
 
 //login with user token
@@ -53,6 +54,9 @@ client.on('ready', () => {
     });
 })
 
+//Functions
+
+//Menu
 function menu() {
     while(true){
         console_out('\nAvailable Guilds');
@@ -91,15 +95,10 @@ function menu() {
         }else if(guild_index == 'q'){
             process.exit(-1);
         }else{
-            console_out('Invalid option\n');
+            console_out('Invalid option');
         }
     }
 }
-
-
-
-
-//Functions
 
 //Commands
 function command(cmd, arg) {
