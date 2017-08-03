@@ -11,6 +11,7 @@ var seperator = config.Seperator;
 var HistoryLength = config.HistoryLength;
 var defaultGuild = config.defaultGuild;
 var defaultChannel = config.defaultChannel;
+var channel;
 rl.setPrompt(config.prompt);
 
 
@@ -21,9 +22,9 @@ login(token);
 client.on('ready', () => {
     console_out('User ' + client.user.username + ' successfully logged in');
     if(defaultGuild != null && defaultChannel != null){
-        var channel = channelsList(guildList()[defaultGuild])[defaultChannel];
+        channel = channelsList(guildList()[defaultGuild])[defaultChannel];
     }else{
-        var channel = menu();
+        channel = menu();
     }
     //clears window, fetches the last n messages and display them
     history(channel);
