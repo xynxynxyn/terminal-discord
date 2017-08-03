@@ -116,7 +116,7 @@ function command(cmd, arg) {
             break;
         case 'nick':
             channel.guild.me.setNickname(arg);
-            console_out('Set nick to ' + arg)
+            console_out('Set nick to ' + arg);
             break;
         case 'update':
         case 'refresh':
@@ -129,7 +129,7 @@ function command(cmd, arg) {
             var last_message = channel.guild.me.lastMessage;
             if(last_message != undefined){
                 if(last_message.deletable){
-                    last_message.delete()
+                    last_message.delete();
                         .then(history(channel));
                 }
             }
@@ -139,7 +139,7 @@ function command(cmd, arg) {
             var last_message = channel.guild.me.lastMessage;
             if(last_message != undefined){
                 if(last_message.editable){
-                    last_message.edit(arg)
+                    last_message.edit(arg);
                         .then(history(channel));
                 }
             }
@@ -147,6 +147,32 @@ function command(cmd, arg) {
         case 'm':
         case 'menu':
             channel = menu();
+            history(channel);
+            break;
+        case 'o':
+        case 'online':
+            var membersList = channel.guild.members.array();
+            var i = 0;
+            while(true){
+                if(membersList[i].presence.status == 'offline'){
+                    if(i>-1){
+                        membersList.splice(i,1);
+                    }
+                }else{
+                    i++;
+                }
+                if(i == membersList.length){
+                    break;
+                }
+            }
+            clear();
+            console_out('Online Users: ');
+            for(var i=0; i<membersList.length; i++){
+                console_out('  ' + membersList[i].user.username);
+            }
+            rl.pause();
+            rlSync.keyIn('\n --enter any key to continue--');
+            rl.resume();
             history(channel);
             break;
         default:
@@ -169,7 +195,7 @@ function history(channel) {
             for(var i=messages.size-1; -1<i; i--){
                 showMessage(messages.array()[i]);
             }
-        })
+        });
 }
 
 //show message

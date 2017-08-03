@@ -74,5 +74,7 @@ __e__, __edit__: replace the content of your last sent message with the string a
 
 __m__, __menu__: open the channel selection menu to switch to a different channel
 
+__o__, __online__: show a list of currently online users
+
 
 Note that edit and delete only work on messages sent in the current session. If you haven't sent a message in the current session the command will do nothing.
