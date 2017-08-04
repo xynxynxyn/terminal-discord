@@ -255,8 +255,13 @@ function showMessage(message) {
             author = chalk.hex(color)(author);
         }
     }
-    if(message.isMemberMentioned(channel.guild.me) && colorsupport && mentionColor != null){
-        var mentionId = new RegExp('\@' + client.user.username);
+    if(message.isMemberMentioned(message.guild.me) && colorsupport && mentionColor != null){
+        if(message.guild.me.nickname != undefined){
+            var meNick = message.guild.me.nickname;
+        }else{
+            var meNick = client.user.username;
+        }
+        var mentionId = new RegExp('\@' + meNick);
         var mention = chalk.bgHex(mentionColor)(content.match(mentionId));
         content = content.replace(mentionId, mention);
     }
