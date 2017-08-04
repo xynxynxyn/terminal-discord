@@ -4,6 +4,11 @@
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
+## Installation
+Clone the repository to a directory of your choice.
+Find your token and add it to the config file.
+Run sudo ./install.sh
+
 ## Config-File
 
 ### Token

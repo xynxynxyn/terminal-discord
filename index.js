@@ -6,20 +6,26 @@ const rlSync = require('readline-sync');
 const chalk = require('chalk');
 const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
-var config = JSON.parse(fs.readFileSync('/home/youmu/Documents/tiscord/config.json'));
-var token = config.token;
-var MaxNameLength = config.MaxNameLength;
-var seperator = config.Seperator;
-var HistoryLength = config.HistoryLength;
-var defaultGuild = config.defaultGuild;
-var defaultChannel = config.defaultChannel;
-var colorsupport = config.colorsupport;
-var mentionColor = config.mentionColor;
-var channel;
-var usenick = config.usenick;
-var datesupport = config.date;
-var timesupport = config.time;
-rl.setPrompt(config.prompt);
+var configPath = getConfigPath();
+if(configPath != 0){
+    var config = JSON.parse(fs.readFileSync(configPath));
+    var token = config.token;
+    var MaxNameLength = config.MaxNameLength;
+    var seperator = config.Seperator;
+    var HistoryLength = config.HistoryLength;
+    var defaultGuild = config.defaultGuild;
+    var defaultChannel = config.defaultChannel;
+    var colorsupport = config.colorsupport;
+    var mentionColor = config.mentionColor;
+    var channel;
+    var usenick = config.usenick;
+    var datesupport = config.date;
+    var timesupport = config.time;
+    rl.setPrompt(config.prompt);
+}else{
+    console_out('Couldn\'t find a config file\nPlace a copy of config.json in ~/.config/terminal-discord/ or ~/.terminal-discord/');
+    process.exit(-1);
+}
 
 
 //login with user token
@@ -197,6 +203,18 @@ function console_out(msg) {
     process.stdout.cursorTo(0);
     console.log(msg);
     rl.prompt(true);
+}
+
+//get config path
+function getConfigPath() {
+    var homedir = process.env['HOME'];
+    if(fs.existsSync(homedir + '/.terminal-discord/config.json')){
+        return homedir + '/.terminal-discord/config.json';
+    }else if(fs.existsSync(homedir + '/.config/terminal-discord/config.json')){
+        return homedir + '/.config/terminal-discord/config.json';
+    }else{
+        return 0;
+    }
 }
 
 //fetch an array of the last N messages
