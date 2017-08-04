@@ -212,6 +212,9 @@ function history(channel) {
 //show message
 function showMessage(message) {
     var content = message.cleanContent;
+    //emote check
+    content = content.replace(/\<:/, '');
+    content = content.replace(/\:\d*>/, '');
     var date = message.createdAt;
     var timestamp = '';
     if(timesupport == true){
