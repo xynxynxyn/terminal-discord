@@ -185,7 +185,7 @@ function command(cmd, arg) {
                 if(membersList[i].nickname != undefined){
                     name = membersList[i].nickname + ' (aka ' + name + ')';
                 }
-                console_out('  ' + name);
+                console_out('  ' + membersList[i].user.presence.status.slice(0,3) + '  ' + name);
             }
             rl.pause();
             rlSync.keyIn('\n --enter any key to continue--');
