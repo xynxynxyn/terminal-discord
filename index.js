@@ -256,7 +256,9 @@ function showMessage(message) {
         }
     }
     if(message.isMemberMentioned(channel.guild.me) && colorsupport && mentionColor != null){
-        content = chalk.bgHex(mentionColor)(content);
+        var mentionId = new RegExp('\@' + client.user.username);
+        var mention = chalk.bgHex(mentionColor)(content.match(mentionId));
+        content = content.replace(mentionId, mention);
     }
     console_out(timestamp + author + seperator + attachment + ' ' + content);
 }
