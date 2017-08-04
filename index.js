@@ -244,9 +244,7 @@ function showMessage(message) {
     if(MaxNameLength != null){
         if(author.length<MaxNameLength){
             var x = MaxNameLength - author.length;
-            for(var i=0; i<x; i+=1){
-                author = author + ' ';
-            }
+            author = author + ' '.repeat(x);
         }else if(author.length>MaxNameLength){
             author = author.slice(0,MaxNameLength);
         }
