@@ -190,6 +190,7 @@ function command(cmd, arg) {
             rl.pause();
             rlSync.keyIn('\n --enter any key to continue--');
             rl.resume();
+            clear();
             history(channel);
             break;
         default:
@@ -249,10 +250,11 @@ function showMessage(message) {
     if(datesupport){
         timestamp = date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear() +  ' ' + timestamp;
     }
-    if(message.member.nickname != undefined && usenick == true){
-        var author = message.member.nickname;
-    }else{
-        var author = message.author.username;
+    var author = message.author.username;
+    if(message.member != null){
+        if(message.member.nickname != undefined && usenick == true){
+            var author = message.member.nickname;
+        }
     }
     var attachment = '';
     if(message.attachments.array().length > 0){
@@ -267,7 +269,7 @@ function showMessage(message) {
             author = author.slice(0,MaxNameLength);
         }
     }
-    if(colorsupport){
+    if(colorsupport && message.member != null){
         var color = message.member.displayHexColor;
         if(color != '#000000'){
             author = chalk.hex(color)(author);
