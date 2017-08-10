@@ -39,11 +39,13 @@ Default is 50
 ### defaultGuild
 
 The index of the guild you want selected at startup.
+Substract 1 from the index in the menu.
 
 Default is null
 
 ### defaultChannel
 The index of the channel you want selected at startup.
+Substract 1 from the index in the menu.
 
 Default is null
 

@@ -77,43 +77,35 @@ client.on('ready', () => {
 //Menu
 function menu() {
     while(true){
-        console_out('\nAvailable Guilds');
         var guilds = guildList();
+        var guildnames = [];
         for(var i=0; i<guilds.length; i++){
-            console_out('['+i+']'+' '+guilds[i].name);
+            //console_out('['+i+']'+' '+guilds[i].name);
+            guildnames.push(guilds[i].name);
         }
-        console_out('[q] quit\n');
         rl.pause();
-        var guild_index = rlSync.keyIn('');
+        var guild_index = rlSync.keyInSelect(guildnames, 'Choose a guild');
         rl.resume();
         if(-1<guild_index && guild_index<guilds.length){
             while(true){
                 var guild = guildList()[guild_index];
-                console_out('Available Channels');
                 var channels = channelsList(guild);
+                var channelnames = [];
                 for(var i=0; i<channels.length; i++){
-                    console_out('['+i+']'+' '+channels[i].name);
+                    //console_out('['+i+']'+' '+channels[i].name);
+                    channelnames.push(channels[i].name);
                 }
-                console_out('[b] go back');
-                console_out('[q] quit\n');
                 rl.pause();
-                var channel_index = rlSync.keyIn('');
-                rl.resume();
+                var channel_index = rlSync.keyInSelect(channelnames,'Choose a channel');
                 if(-1<channel_index && channel_index<channels.length){
                     var channel = channels[channel_index];
                     return channel;
-                }else if(channel_index== 'b'){
+                }else if(channel_index== -1){
                     break;
-                }else if(channel_index == 'q'){
-                    process.exit(-1);
-                }else{
-                    console_out('Invalid option\n');
                 }
             }
-        }else if(guild_index == 'q'){
+        }else if(guild_index == -1){
             process.exit(-1);
-        }else{
-            console_out('Invalid option');
         }
     }
 }
@@ -188,7 +180,7 @@ function command(cmd, arg) {
                 console_out('  ' + membersList[i].user.presence.status.slice(0,3) + '  ' + name);
             }
             rl.pause();
-            rlSync.keyIn('\n --enter any key to continue--');
+            rlSync.keyInPause('');
             rl.resume();
             clear();
             history(channel);
