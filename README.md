@@ -1,6 +1,6 @@
 # Terminal-Discord
 
-![terminal-discord](https://my.mixtape.moe/hblbex.png)
+![terminal-discord](https://my.mixtape.moe/amhppa.png)
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
