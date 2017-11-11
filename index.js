@@ -84,7 +84,44 @@ function menu() {
             guildnames.push(guilds[i].name);
         }
         rl.pause();
-        var guild_index = rlSync.keyInSelect(guildnames, 'Choose a guild');
+        if(guildnames.length>8){
+            var n = Math.ceil(guildnames.length/8);
+            var guilds_array = [];
+            for(var i=0; i<n; i++){
+                guilds_sub = guildnames.slice(0,8);
+                guilds_array.push(guilds_sub);
+                guildnames = guildnames.slice(8);
+            }
+            for(var i=1; i<guilds_array.length; i++){
+                guilds_array[i].unshift('Show previous guilds')
+            }
+            var x = 0
+            while(true){
+                if(x==n-1){
+                    var temp = rlSync.keyInSelect(guilds_array[x],'Choose a guild',{cancel: 'CANCEL'});
+                }else{
+                    var temp = rlSync.keyInSelect(guilds_array[x],'Choose a guild',{cancel: 'Show additional guilds'});
+                }
+                if(temp==-1 && x==guilds_array.length-1){
+                    var guild_index = -1;
+                    break;
+                }else if(temp==-1){
+                    x += 1;
+                }else if(temp==0 && x!=0){
+                    x -= 1;
+                }else{
+                    if(x==0){
+                        var guild_index = temp;
+                    }else{
+                        var guild_index = x*8+temp-1;
+                    }
+                    break;
+                }
+            }
+
+        }else{
+            var guild_index = rlSync.keyInSelect(guildnames, 'Choose a guild');
+        }
         rl.resume();
         if(-1<guild_index && guild_index<guilds.length){
             while(true){
@@ -96,7 +133,43 @@ function menu() {
                     channelnames.push(channels[i].name);
                 }
                 rl.pause();
-                var channel_index = rlSync.keyInSelect(channelnames,'Choose a channel');
+                if(channelnames.length>8){
+                    var n = Math.ceil(channelnames.length/8);
+                    var channels_array = [];
+                    for(var i=0; i<n; i++){
+                        channels_sub = channelnames.slice(0,8);
+                        channels_array.push(channels_sub);
+                        channelnames = channelnames.slice(8);
+                    }
+                    for(var i=1; i<channels_array.length; i++){
+                        channels_array[i].unshift('Show previous channels')
+                    }
+                    var x = 0
+                    while(true){
+                        if(x==n-1){
+                            var temp = rlSync.keyInSelect(channels_array[x],'Choose a channel',{cancel: 'CANCEL'});
+                        }else{
+                            var temp = rlSync.keyInSelect(channels_array[x],'Choose a channel',{cancel: 'Show additional channels'});
+                        }
+                        if(temp==-1 && x==channels_array.length-1){
+                            var channel_index = -1;
+                            break;
+                        }else if(temp==-1){
+                            x += 1;
+                        }else if(temp==0 && x!=0){
+                            x -= 1;
+                        }else{
+                            if(x==0){
+                                var channel_index = temp;
+                            }else{
+                                var channel_index = x*8+temp-1;
+                            }
+                            break;
+                        }
+                    }
+                }else{
+                    var channel_index = rlSync.keyInSelect(channelnames,'Choose a channel');
+                }
                 if(-1<channel_index && channel_index<channels.length){
                     var channel = channels[channel_index];
                     return channel;
