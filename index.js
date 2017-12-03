@@ -193,10 +193,25 @@ function command(cmd, arg) {
             clear();
             history(channel);
             break;
+        case 'dm':
+            clear();
+            console_out(dm_channels());
+            break;
         default:
             console_out('Unknown command');
     }
 }
+
+//returns sorted dm/group channel list
+function dm_channels(){
+    var channel_list = client.channels.filterArray(channel => channel.type=='dm' || channel.type=='group');
+    return channel_list.sort(function (a, b) {
+        return a.lastMessageID - b.lastMessageID;
+    });
+}
+
+
+//general select function
 function select(list, previous, next, choice){
     var n = Math.ceil(list.length/8);
     var select_list = [];
