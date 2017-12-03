@@ -138,7 +138,7 @@ function command(cmd, arg) {
             break;
         case 'd':
         case 'delete':
-            var last_message = channel.guild.me.lastMessage;
+            var last_message = client.user.lastMessage;
             if(last_message != undefined){
                 if(last_message.deletable){
                     last_message.delete()
@@ -193,21 +193,79 @@ function command(cmd, arg) {
             clear();
             history(channel);
             break;
+        case 'pm':
         case 'dm':
             clear();
-            console_out(dm_channels());
+            rl.pause();
+            var dm_channel = select_dm(dm_channels())
+            if( dm_channel != undefined){
+                channel = dm_channel;
+            }
+            rl.resume();
+            clear();
+            history(channel);
+            break;
+        case 'g':
+        case 'gr':
+        case 'group':
+            clear();
+            rl.pause();
+            var group_channel = select_group(group_channels());
+            if(group_channel != undefined){
+                channel = group_channel;
+            }
+            rl.resume();
+            clear();
+            history(channel);
             break;
         default:
             console_out('Unknown command');
+            break;
     }
 }
 
 //returns sorted dm/group channel list
-function dm_channels(){
-    var channel_list = client.channels.filterArray(channel => channel.type=='dm' || channel.type=='group');
+function group_channels(){
+    var channel_list = client.channels.filterArray(channel => channel.type=='group');
     return channel_list.sort(function (a, b) {
         return a.lastMessageID - b.lastMessageID;
-    });
+    }).reverse();
+}
+function dm_channels(){
+    var channel_list = client.channels.filterArray(channel => channel.type=='dm');
+    return channel_list.sort(function (a, b) {
+        return a.lastMessageID - b.lastMessageID;
+    }).reverse();
+}
+
+function select_group(list){
+    var names = [];
+    for(var i=0; i<list.length; i++){
+        var members = list[i].recipients.array();
+        names.push([]);
+        for(var j=0; j<members.length; j++){
+            names[i].push(members[j].username);
+        }
+    }
+    if(names.length>8){
+        var dm_id = select(names, 'Show previous channels', 'Show additional channels', 'Choose DM channel');
+    }else{
+        var dm_id = rlSync.keyInSelect(names, 'Choose DM channel');
+    }
+    return list[dm_id];
+}
+
+function select_dm(list){
+    var names = [];
+    for(var i=0; i<list.length; i++){
+        names.push(list[i].recipient.username);
+    }
+    if(names.length>8){
+        var dm_id = select(names, 'Show previous channels', 'Show additional channels', 'Choose DM channel');
+    }else{
+        var dm_id = rlSync.keyInSelect(names, 'Choose DM channel');
+    }
+    return list[dm_id];
 }
 
 
@@ -324,8 +382,8 @@ function showMessage(message) {
             author = chalk.hex(color)(author);
         }
     }
-    if(message.isMemberMentioned(message.guild.me) && colorsupport && mentionColor != null){
-        if(message.guild.me.nickname != undefined){
+    if(message.isMemberMentioned(client.user) && colorsupport && mentionColor != null){
+        if(channel.type!='dm' && channel.type!='group' && message.guild.me.nickname != undefined){
             var meNick = message.guild.me.nickname;
         }else{
             var meNick = client.user.username;

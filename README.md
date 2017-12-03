@@ -98,5 +98,9 @@ __m__, __menu__: open the channel selection menu to switch to a different channe
 
 __o__, __online__: show a list of currently online users
 
+__g__, __gr__, __group__: open group chat selection menu to switch to a different channel
+
+__dm__, __pm__: open dm chat selection menu to switch to a different channel
+
 
 Note that edit and delete only work on messages sent in the current session. If you haven't sent a message in the current session the command will do nothing.
