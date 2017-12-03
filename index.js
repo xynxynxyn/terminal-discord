@@ -85,40 +85,7 @@ function menu() {
         }
         rl.pause();
         if(guildnames.length>8){
-            var n = Math.ceil(guildnames.length/8);
-            var guilds_array = [];
-            for(var i=0; i<n; i++){
-                guilds_sub = guildnames.slice(0,8);
-                guilds_array.push(guilds_sub);
-                guildnames = guildnames.slice(8);
-            }
-            for(var i=1; i<guilds_array.length; i++){
-                guilds_array[i].unshift('Show previous guilds')
-            }
-            var x = 0
-            while(true){
-                if(x==n-1){
-                    var temp = rlSync.keyInSelect(guilds_array[x],'Choose a guild',{cancel: 'CANCEL'});
-                }else{
-                    var temp = rlSync.keyInSelect(guilds_array[x],'Choose a guild',{cancel: 'Show additional guilds'});
-                }
-                if(temp==-1 && x==guilds_array.length-1){
-                    var guild_index = -1;
-                    break;
-                }else if(temp==-1){
-                    x += 1;
-                }else if(temp==0 && x!=0){
-                    x -= 1;
-                }else{
-                    if(x==0){
-                        var guild_index = temp;
-                    }else{
-                        var guild_index = x*8+temp-1;
-                    }
-                    break;
-                }
-            }
-
+            var guild_index = select(guildnames, 'Show additional guilds', 'Show previous guilds', 'Choose a guild');
         }else{
             var guild_index = rlSync.keyInSelect(guildnames, 'Choose a guild');
         }
@@ -134,39 +101,7 @@ function menu() {
                 }
                 rl.pause();
                 if(channelnames.length>8){
-                    var n = Math.ceil(channelnames.length/8);
-                    var channels_array = [];
-                    for(var i=0; i<n; i++){
-                        channels_sub = channelnames.slice(0,8);
-                        channels_array.push(channels_sub);
-                        channelnames = channelnames.slice(8);
-                    }
-                    for(var i=1; i<channels_array.length; i++){
-                        channels_array[i].unshift('Show previous channels')
-                    }
-                    var x = 0
-                    while(true){
-                        if(x==n-1){
-                            var temp = rlSync.keyInSelect(channels_array[x],'Choose a channel',{cancel: 'CANCEL'});
-                        }else{
-                            var temp = rlSync.keyInSelect(channels_array[x],'Choose a channel',{cancel: 'Show additional channels'});
-                        }
-                        if(temp==-1 && x==channels_array.length-1){
-                            var channel_index = -1;
-                            break;
-                        }else if(temp==-1){
-                            x += 1;
-                        }else if(temp==0 && x!=0){
-                            x -= 1;
-                        }else{
-                            if(x==0){
-                                var channel_index = temp;
-                            }else{
-                                var channel_index = x*8+temp-1;
-                            }
-                            break;
-                        }
-                    }
+                    var channel_index = select(channelnames, 'Show additional channels', 'Show previous channels', 'Choose a channel');
                 }else{
                     var channel_index = rlSync.keyInSelect(channelnames,'Choose a channel');
                 }
@@ -260,6 +195,40 @@ function command(cmd, arg) {
             break;
         default:
             console_out('Unknown command');
+    }
+}
+function select(list, previous, next, choice){
+    var n = Math.ceil(list.length/8);
+    var select_list = [];
+    for(var i=0; i<n; i++){
+        select_list.push(list.slice(0,8));
+        list = list.slice(8);
+    }
+    for(var i=1; i<select_list.length; i++){
+        select_list[i].unshift(previous)
+    }
+    var x = 0
+    while(true){
+        if(x==n-1){
+            var temp = rlSync.keyInSelect(select_list[x], choice,{cancel: 'CANCEL'});
+        }else{
+            var temp = rlSync.keyInSelect(select_list[x], choice,{cancel: next});
+        }
+        if(temp==-1 && x==select_list.length-1){
+            return guild_index = -1;
+            break;
+        }else if(temp==-1){
+            x += 1;
+        }else if(temp==0 && x!=0){
+            x -= 1;
+        }else{
+            if(x==0){
+                return guild_index = temp;
+            }else{
+                return guild_index = x*8+temp-1;
+            }
+            break;
+        }
     }
 }
 
