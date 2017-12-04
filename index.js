@@ -148,7 +148,7 @@ function command(cmd, arg) {
             break;
         case 'e':
         case 'edit':
-            var last_message = channel.guild.me.lastMessage;
+            var last_message = client.user.lastMessage;
             if(last_message != undefined){
                 if(last_message.editable){
                     last_message.edit(arg)
@@ -164,34 +164,39 @@ function command(cmd, arg) {
             break;
         case 'o':
         case 'online':
-            var membersList = channel.guild.members.array();
-            var i = 0;
-            while(true){
-                if(membersList[i].presence.status == 'offline'){
-                    if(i>-1){
-                        membersList.splice(i,1);
+            if(channel.type=='text'){
+                console_out('test');
+                var membersList = channel.guild.members.array();
+                var i = 0;
+                while(true){
+                    if(membersList[i].presence.status == 'offline'){
+                        if(i>-1){
+                            membersList.splice(i,1);
+                        }
+                    }else{
+                        i++;
                     }
-                }else{
-                    i++;
+                    if(i == membersList.length){
+                        break;
+                    }
                 }
-                if(i == membersList.length){
-                    break;
+            
+                clear();
+                console_out('Online Users: ');
+                for(var i=0; i<membersList.length; i++){
+                    var name = membersList[i].user.username;
+                    if(membersList[i].nickname != undefined){
+                        name = membersList[i].nickname + ' (aka ' + name + ')';
+                    }
+                    console_out('  ' + membersList[i].user.presence.status.slice(0,3) + '  ' + name);
                 }
+                rl.pause();
+                rlSync.keyInPause('');
+                rl.resume();
             }
-            clear();
-            console_out('Online Users: ');
-            for(var i=0; i<membersList.length; i++){
-                var name = membersList[i].user.username;
-                if(membersList[i].nickname != undefined){
-                    name = membersList[i].nickname + ' (aka ' + name + ')';
-                }
-                console_out('  ' + membersList[i].user.presence.status.slice(0,3) + '  ' + name);
-            }
-            rl.pause();
-            rlSync.keyInPause('');
-            rl.resume();
             clear();
             history(channel);
+            
             break;
         case 'pm':
         case 'dm':
