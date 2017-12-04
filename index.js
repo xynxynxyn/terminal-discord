@@ -165,7 +165,6 @@ function command(cmd, arg) {
         case 'o':
         case 'online':
             if(channel.type=='text'){
-                console_out('test');
                 var membersList = channel.guild.members.array();
                 var i = 0;
                 while(true){
