@@ -38,9 +38,11 @@ If not null this corresponds to the index of the guild you want selected at star
 If not null this corresponds to the index of the channel you want selected at startup.
 
 If the item is on the first page of the selection interface then the index is
+
 *displayed\_number -1*
 
 If the item is on another page then the index is
+
 *displayed\_number -2 + (page\_number - 1) * 8*
 
 ### prompt
