@@ -85,7 +85,7 @@ function menu() {
         }
         rl.pause();
         if(guildnames.length>8){
-            var guild_index = select(guildnames, 'Show additional guilds', 'Show previous guilds', 'Choose a guild');
+            var guild_index = select(guildnames, 'Show previous guilds', 'Show additional guilds', 'Choose a guild');
         }else{
             var guild_index = rlSync.keyInSelect(guildnames, 'Choose a guild');
         }
@@ -101,7 +101,7 @@ function menu() {
                 }
                 rl.pause();
                 if(channelnames.length>8){
-                    var channel_index = select(channelnames, 'Show additional channels', 'Show previous channels', 'Choose a channel');
+                    var channel_index = select(channelnames, 'Show previous channels', 'Show additional channels', 'Choose a channel');
                 }else{
                     var channel_index = rlSync.keyInSelect(channelnames,'Choose a channel');
                 }
