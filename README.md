@@ -1,6 +1,6 @@
 # Terminal-Discord
 
-![terminal-discord](https://image.ibb.co/bzoZZQ/scrot_20170927_173812.png)
+![terminal-discord](https://image.ibb.co/gNnGsR/examplediscord.png)
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
@@ -16,68 +16,50 @@ Run sudo ./install.sh
 Terminal-Discord uses a token to login rather than email and password since discord.js doesn't support that method anymore.
 To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navigate to the Application tab and find the token in the local storage.
 
-![Token](https://my.mixtape.moe/taqhbx.png)
+![Token](https://image.ibb.co/iXBLK6/discord_token.png)
 
 ### MaxNameLength
 
 The maximum length of usernames. If the value is null no extra spaces will be added to names and the messages will not be alligned
 
-Default is 10
-
 ### Seperator
 
 Seperator between username and message content.
-
-Default is ">"
 
 ### HistoryLength
 
 Number of messages loaded at a time.
 
-Default is 50
-
 ### defaultGuild
 
-The index of the guild you want selected at startup.
-Substract 1 from the index in the menu.
-
-Default is null
+If not null this corresponds to the index of the guild you want selected at startup.
 
 ### defaultChannel
-The index of the channel you want selected at startup.
-Substract 1 from the index in the menu.
+If not null this corresponds to the index of the channel you want selected at startup.
 
-Default is null
+If the item is on the first page of the selection interface then the index is
+*displayed\_number -1*
+
+If the item is on another page then the index is
+*displayed\_number -2 + (page\_number - 1) * 8*
 
 ### prompt
 The prompt used.
 
-Default is ">"
-
 ### colorsupport
 Wether color for usernames is enabled or not.
-
-Default is true
 
 ### mentionColor
 What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
 
-Default is null
-
 ### usenick
 Wether the nickname should be displayed when available.
-
-Default is true
 
 ### time
 Show the timestamp next to a message.
 
-Default is true
-
 ### date
 Enable date support to display DD.MM.YYYY in front of the time.
-
-Default is false
 
 
 ## Commands
