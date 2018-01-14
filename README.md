@@ -11,6 +11,8 @@ Run sudo ./install.sh
 
 ## Config-File
 
+All settings except Token are optional. Defaults can be found at the beginning of index.js where the config-file is parsed.
+
 ### Token
 
 Terminal-Discord uses a token to login rather than email and password since discord.js doesn't support that method anymore.
