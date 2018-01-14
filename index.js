@@ -7,21 +7,62 @@ const chalk = require('chalk');
 const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
 var configPath = getConfigPath();
+var channel;
 if(configPath != 0){
     var config = JSON.parse(fs.readFileSync(configPath));
-    var token = config.token;
-    var MaxNameLength = config.MaxNameLength;
-    var seperator = config.Seperator;
-    var HistoryLength = config.HistoryLength;
-    var defaultGuild = config.defaultGuild;
-    var defaultChannel = config.defaultChannel;
-    var colorsupport = config.colorsupport;
-    var mentionColor = config.mentionColor;
-    var channel;
-    var usenick = config.usenick;
-    var datesupport = config.date;
-    var timesupport = config.time;
-    rl.setPrompt(config.prompt);
+    if(config.token != null) {
+        var token = config.token;
+    }else{
+        console_out('Couldn\'t find token in config file')
+        process.exit(-1);
+    }
+    var MaxNameLength = 9;
+    if(config.MaxNameLength != null) {
+        MaxNameLength = config.MaxNameLength;
+    }
+
+    var seperator = '>';
+    if(config.seperator != null) {
+        var seperator = config.Seperator;
+    }
+    var HistoryLength = 70;
+    if(config.HistoryLength != null) {
+        HistoryLength = config.HistoryLength;
+    }
+    var defaultGuild = null;
+    var defaultChannel = null;
+    if(config.defaultGuild != null && config.defaultChannel != null) {
+        defaultGuild = config.defaultGuild;
+        defaultChannel = config.defaultChannel;
+    }
+    var colorsupport = true;
+    if(config.colorsupport != null) {
+        colorsupport = config.colorsupport;
+    }
+    var mentionColor = true;
+    if(config.mentionColor != null) {
+        mentionColor = config.mentionColor;
+    }
+    var usenick = true;
+    if(config.usenick != null) {
+        var usenick = config.usenick;
+    }
+    var datesupport = false;
+    if(config.date != null) {
+        datesupport = config.date;
+    }
+    var timesupport = false;
+    if(config.time != null) {
+        timesupport = config.time;
+    }
+    var prompt = '>';
+    if(config.prompt != null) {
+        prompt = config.prompt;
+    }
+    var displaynick = false;
+    if(config.displaynick != null) {
+        displaynick = config.displaynick;
+    }
 }else{
     console_out('Couldn\'t find a config file\nPlace a copy of config.json in ~/.config/terminal-discord/ or ~/.terminal-discord/');
     process.exit(-1);
@@ -34,6 +75,10 @@ login(token);
 
 client.on('ready', () => {
     console_out('User ' + client.user.username + ' successfully logged in');
+    if(displaynick) {
+        prompt = client.user.username + ' ' + prompt;
+    }
+    rl.setPrompt(prompt);
     if(defaultGuild != null && defaultChannel != null){
         channel = channelsList(guildList()[defaultGuild])[defaultChannel];
     }else{

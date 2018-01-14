@@ -48,6 +48,9 @@ If the item is on another page then the index is
 ### prompt
 The prompt used.
 
+### displayuser
+Wether the username should be displayed in front of the prompt.
+
 ### colorsupport
 Wether color for usernames is enabled or not.
 
