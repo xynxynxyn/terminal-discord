@@ -10,6 +10,7 @@ var configPath = getConfigPath();
 var channel;
 if(configPath != 0){
     var config = JSON.parse(fs.readFileSync(configPath));
+
     if(config.token != null) {
         var token = config.token;
     }else{
@@ -17,52 +18,32 @@ if(configPath != 0){
         process.exit(-1);
     }
     var MaxNameLength = 9;
-    if(config.MaxNameLength != null) {
-        MaxNameLength = config.MaxNameLength;
-    }
-
     var seperator = '>';
-    if(config.seperator != null) {
-        var seperator = config.Seperator;
-    }
     var HistoryLength = 70;
-    if(config.HistoryLength != null) {
-        HistoryLength = config.HistoryLength;
-    }
     var defaultGuild = null;
     var defaultChannel = null;
+    var colorsupport = true;
+    var mentionColor = true;
+    var usenick = true;
+    var datesupport = false;
+    var timesupport = false;
+    var prompt = '>';
+    var displaynick = false;
+
+    if(config.MaxNameLength != null) {MaxNameLength = config.MaxNameLength;}
+    if(config.seperator != null) {var seperator = config.Seperator;}
+    if(config.HistoryLength != null) {HistoryLength = config.HistoryLength;}
     if(config.defaultGuild != null && config.defaultChannel != null) {
         defaultGuild = config.defaultGuild;
         defaultChannel = config.defaultChannel;
     }
-    var colorsupport = true;
-    if(config.colorsupport != null) {
-        colorsupport = config.colorsupport;
-    }
-    var mentionColor = true;
-    if(config.mentionColor != null) {
-        mentionColor = config.mentionColor;
-    }
-    var usenick = true;
-    if(config.usenick != null) {
-        var usenick = config.usenick;
-    }
-    var datesupport = false;
-    if(config.date != null) {
-        datesupport = config.date;
-    }
-    var timesupport = false;
-    if(config.time != null) {
-        timesupport = config.time;
-    }
-    var prompt = '>';
-    if(config.prompt != null) {
-        prompt = config.prompt;
-    }
-    var displaynick = false;
-    if(config.displaynick != null) {
-        displaynick = config.displaynick;
-    }
+    if(config.colorsupport != null) {colorsupport = config.colorsupport;}
+    if(config.mentionColor != null) {mentionColor = config.mentionColor;}
+    if(config.usenick != null) {var usenick = config.usenick;}
+    if(config.date != null) {datesupport = config.date;}
+    if(config.time != null) {timesupport = config.time;}
+    if(config.prompt != null) {prompt = config.prompt;}
+    if(config.displaynick != null) {displaynick = config.displaynick;}
 }else{
     console_out('Couldn\'t find a config file\nPlace a copy of config.json in ~/.config/terminal-discord/ or ~/.terminal-discord/');
     process.exit(-1);
