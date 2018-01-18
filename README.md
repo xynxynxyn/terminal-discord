@@ -13,6 +13,10 @@ Run sudo ./install.sh
 
 ## Config-File
 
+The default locations for the config file are ~/.config/terminal-discord or ~/.terminal-discord. It is however also possible to pass a path to a config file like such
+
+$terminal-discord PATH\_TO\_CONFIG
+
 All settings except Token are optional. Defaults can be found at the beginning of index.js where the config-file is parsed.
 
 ### Token

@@ -6,9 +6,14 @@ const rlSync = require('readline-sync');
 const chalk = require('chalk');
 const rl = readline.createInterface(process.stdin, process.stdout);
 var client = new Discord.Client();
-var configPath = getConfigPath();
+var configPath;
+if(process.argv[2] == undefined) {
+    configPath = getConfigPath();
+}else{
+    configPath = process.argv[2]; 
+}
 var channel;
-if(configPath != 0){
+if(fs.existsSync(configPath)){
     var config = JSON.parse(fs.readFileSync(configPath));
 
     if(config.token != null) {
@@ -45,7 +50,7 @@ if(configPath != 0){
     if(config.prompt != null) {prompt = config.prompt;}
     if(config.displaynick != null) {displaynick = config.displaynick;}
 }else{
-    console_out('Couldn\'t find a config file\nPlace a copy of config.json in ~/.config/terminal-discord/ or ~/.terminal-discord/');
+    console_out('Could not find a config file in ' + configPath);
     process.exit(-1);
 }
 
@@ -337,8 +342,10 @@ function select(list, previous, next, choice){
 
 //use this instead of console.log for clean lines
 function console_out(msg) {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0, null);
+    //process.stdout.clearLine();
+    //process.stdout.cursorTo(0);
     console.log(msg);
     rl.prompt(true);
 }
