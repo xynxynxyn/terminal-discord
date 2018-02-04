@@ -400,8 +400,6 @@ function select(list, previous, next, choice) {
 function console_out(msg) {
     readline.clearLine(process.stdout, 0);
     readline.cursorTo(process.stdout, 0, null);
-    //process.stdout.clearLine();
-    //process.stdout.cursorTo(0);
     console.log(msg);
     rl.prompt(true);
 }
