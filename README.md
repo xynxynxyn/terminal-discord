@@ -28,7 +28,11 @@ To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navig
 
 ### MaxNameLength
 
-The maximum length of usernames. If the value is null no extra spaces will be added to names and the messages will not be alligned
+The maximum length of usernames. If the value is null usernames are not cut short.
+
+### allign
+
+If set to false the seperators will be displayed right after the username instead of them being alligned with other seperators.
 
 ### Seperator
 

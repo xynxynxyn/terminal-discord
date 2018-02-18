@@ -22,7 +22,8 @@ if (fs.existsSync(configPath)) {
         console_out("Couldn't find token in config file");
         process.exit(-1);
     }
-    var MaxNameLength = 9;
+    var MaxNameLength = null;
+    var allign = true;
     var seperator = ">";
     var HistoryLength = 70;
     var defaultGuild = null;
@@ -35,39 +36,42 @@ if (fs.existsSync(configPath)) {
     var prompt = ">";
     var displaynick = false;
 
-    if (config.MaxNameLength != null) {
+    if (config.MaxNameLength != undefined) {
         MaxNameLength = config.MaxNameLength;
     }
-    if (config.seperator != null) {
+    if (config.seperator != undefined) {
         var seperator = config.Seperator;
     }
-    if (config.HistoryLength != null) {
+    if (config.HistoryLength != undefined) {
         HistoryLength = config.HistoryLength;
     }
-    if (config.defaultGuild != null && config.defaultChannel != null) {
+    if (config.defaultGuild != undefined && config.defaultChannel != undefined) {
         defaultGuild = config.defaultGuild;
         defaultChannel = config.defaultChannel;
     }
-    if (config.colorsupport != null) {
+    if (config.colorsupport != undefined) {
         colorsupport = config.colorsupport;
     }
-    if (config.mentionColor != null) {
+    if (config.mentionColor != undefined) {
         mentionColor = config.mentionColor;
     }
-    if (config.usenick != null) {
+    if (config.usenick != undefined) {
         var usenick = config.usenick;
     }
-    if (config.date != null) {
+    if (config.date != undefined) {
         datesupport = config.date;
     }
-    if (config.time != null) {
+    if (config.time != undefined) {
         timesupport = config.time;
     }
-    if (config.prompt != null) {
+    if (config.prompt != undefined) {
         prompt = config.prompt;
     }
-    if (config.displaynick != null) {
+    if (config.displaynick != undefined) {
         displaynick = config.displaynick;
+    }
+    if (config.allign != undefined) {
+        allign = config.allign;
     }
 } else {
     console_out("Could not find a config file in " + configPath);
@@ -473,7 +477,7 @@ function showMessage(message) {
         attachment = " " + message.attachments.array()[0].url;
     }
     if (MaxNameLength != null) {
-        if (author.length < MaxNameLength) {
+        if (author.length < MaxNameLength && allign) {
             var x = MaxNameLength - author.length;
             author = author + " ".repeat(x);
         } else if (author.length > MaxNameLength) {
