@@ -45,7 +45,10 @@ if (fs.existsSync(configPath)) {
     if (config.HistoryLength != undefined) {
         HistoryLength = config.HistoryLength;
     }
-    if (config.defaultGuild != undefined && config.defaultChannel != undefined) {
+    if (
+        config.defaultGuild != undefined &&
+        config.defaultChannel != undefined
+    ) {
         defaultGuild = config.defaultGuild;
         defaultChannel = config.defaultChannel;
     }
@@ -74,7 +77,13 @@ if (fs.existsSync(configPath)) {
         allign = config.allign;
     }
 } else {
-    console_out("Could not find a config file in " + configPath);
+    if (configPath != 0) {
+        console_out("Could not find a config file in " + configPath);
+    } else {
+        console_out(
+            "~/.config/terminal-discord/ or ~/.terminal-discord do not exist\nPlace a config file in one of those directories"
+        );
+    }
     process.exit(-1);
 }
 
