@@ -529,7 +529,8 @@ function login(token) {
 
 //clear screen
 function clear() {
-    console_out("\033c");
+    console_out("\033[2J")
+    console_out("\033[H")
 }
 
 //lists channels of a guild
