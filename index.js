@@ -164,7 +164,7 @@ function menu() {
                 var guild = guildList()[guild_index];
                 var channels = channelsList(guild);
                 var channelnames = [];
-                for (let i = 0; i < channels.length; i++) {
+                for (var i = 0; i < channels.length; i++) {
                     //console_out('['+i+']'+' '+channels[i].name);
                     channelnames.push(channels[i].name);
                 }
@@ -259,7 +259,7 @@ function command(cmd, arg) {
 
                 clear();
                 console_out("Online Users: ");
-                for (let i = 0; i < membersList.length; i++) {
+                for (var i = 0; i < membersList.length; i++) {
                     var name = membersList[i].user.username;
                     if (membersList[i].nickname != undefined) {
                         name = membersList[i].nickname + " (aka " + name + ")";
@@ -335,10 +335,10 @@ function dm_channels() {
 function select_group(list) {
     var names = [];
     var dm_id;
-    for (let i = 0; i < list.length; i++) {
+    for (var i = 0; i < list.length; i++) {
         var members = list[i].recipients.array();
         names.push([]);
-        for (let j = 0; j < members.length; j++) {
+        for (var j = 0; j < members.length; j++) {
             names[i].push(members[j].username);
         }
     }
@@ -358,7 +358,7 @@ function select_group(list) {
 function select_dm(list) {
     var names = [];
     var dm_id;
-    for (let i = 0; i < list.length; i++) {
+    for (var i = 0; i < list.length; i++) {
         names.push(list[i].recipient.username);
     }
     if (names.length > 8) {
@@ -378,11 +378,11 @@ function select_dm(list) {
 function select(list, previous, next, choice) {
     var n = Math.ceil(list.length / 8);
     var select_list = [];
-    for (let i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
         select_list.push(list.slice(0, 8));
         list = list.slice(8);
     }
-    for (let i = 1; i < select_list.length; i++) {
+    for (var i = 1; i < select_list.length; i++) {
         select_list[i].unshift(previous);
     }
     var x = 0;
@@ -439,7 +439,7 @@ function getConfigPath() {
 //fetch an array of the last N messages
 function history(channel) {
     channel.fetchMessages({ limit: HistoryLength }).then(messages => {
-        for (let i = messages.size - 1; -1 < i; i--) {
+        for (var i = messages.size - 1; -1 < i; i--) {
             showMessage(messages.array()[i]);
         }
     });
