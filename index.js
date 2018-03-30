@@ -40,7 +40,7 @@ if (fs.existsSync(configPath)) {
         MaxNameLength = config.MaxNameLength;
     }
     if (config.seperator != undefined) {
-        var seperator = config.Seperator;
+        var seperator = config.seperator;
     }
     if (config.HistoryLength != undefined) {
         HistoryLength = config.HistoryLength;
