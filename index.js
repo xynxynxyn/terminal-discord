@@ -108,11 +108,7 @@ client.on("ready", () => {
     //when a message is recieved display the last n messages
     client.on("message", message => {
         if (message.channel === channel) {
-            if (message.author === client.user) {
-                history(channel);
-            } else {
-                showMessage(message);
-            }
+            showMessage(message);
         }
     });
 
@@ -128,6 +124,7 @@ client.on("ready", () => {
             if (line === "") {
                 history(channel);
             } else {
+                history(channel);
                 channel.send(line);
                 rl.prompt(true);
             }
