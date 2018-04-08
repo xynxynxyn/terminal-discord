@@ -511,7 +511,7 @@ function showMessage(message) {
         } else {
             meNick = client.user.username;
         }
-        var mentionId = new RegExp("@" + meNick);
+        var mentionId = new RegExp("@" + meNick.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"));
         var mention = chalk.bgHex(mentionColor)(content.match(mentionId));
         content = content.replace(mentionId, mention);
     }
