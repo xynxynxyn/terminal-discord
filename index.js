@@ -116,9 +116,9 @@ client.on("ready", () => {
     rl.on("line", function(line) {
         if (line[0] === "/" && line.length > 1) {
             //check for command
-            var cmd = line.match(/[a-z]+\b/)[0];
+            var cmd = line.match(/[a-z,A-Z]+\b/)[0];
             var arg = line.substr(cmd.length + 2, line.length);
-            command(cmd, arg);
+            command(cmd.toLowerCase(), arg);
         } else {
             //send a message
             if (line === "") {
