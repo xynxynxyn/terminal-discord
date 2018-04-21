@@ -109,6 +109,12 @@ client.on("ready", () => {
     client.on("message", message => {
         if (message.channel === channel) {
             showMessage(message);
+            message.acknowledge();
+        }
+    });
+    client.on("messageDelete", message => {
+        if (message.channel === channel) {
+            history(channel);
         }
     });
 
@@ -438,6 +444,7 @@ function history(channel) {
     channel.fetchMessages({ limit: HistoryLength }).then(messages => {
         for (var i = messages.size - 1; -1 < i; i--) {
             showMessage(messages.array()[i]);
+            messages.array()[i].acknowledge();
         }
     });
 }
@@ -511,7 +518,9 @@ function showMessage(message) {
         } else {
             meNick = client.user.username;
         }
-        var mentionId = new RegExp("@" + meNick.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"));
+        var mentionId = new RegExp(
+            "@" + meNick.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+        );
         var mention = chalk.bgHex(mentionColor)(content.match(mentionId));
         content = content.replace(mentionId, mention);
     }
@@ -526,8 +535,8 @@ function login(token) {
 
 //clear screen
 function clear() {
-    console_out("\033[2J")
-    console_out("\033[H")
+    console_out("\033[2J");
+    console_out("\033[H");
 }
 
 //lists channels of a guild
