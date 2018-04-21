@@ -122,8 +122,6 @@ client.on("ready", () => {
     client.on("message", message => {
         if (message.channel === channel) {
             showMessage(message);
-            message.acknowledge();
-            channel.acknowledge();
         }
     });
     client.on("messageDelete", message => {
@@ -465,7 +463,6 @@ function history(channel) {
             showMessage(messages.array()[i]);
             messages.array()[i];
         }
-        channel.acknowledge;
     });
 }
 
