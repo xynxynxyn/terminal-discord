@@ -98,7 +98,20 @@ client.on("ready", () => {
     }
     rl.setPrompt(prompt);
     if (defaultGuild != null && defaultChannel != null) {
-        channel = channelsList(guildList()[defaultGuild])[defaultChannel];
+        if (
+            guildList()[defaultGuild] != undefined && 
+            channelsList(guildList()[defaultGuild])[defaultChannel] != undefined
+        ) {
+            channel = channelsList(guildList()[defaultGuild])[defaultChannel];
+        } else {
+            console_out(
+                "Default guild and/or channel is not correct...\nEntering menu..."
+            );
+            rl.pause();
+            rlSync.keyInPause("");
+            rl.resume();
+            channel = menu();
+        }
     } else {
         channel = menu();
     }
@@ -110,6 +123,7 @@ client.on("ready", () => {
         if (message.channel === channel) {
             showMessage(message);
             message.acknowledge();
+            channel.acknowledge();
         }
     });
     client.on("messageDelete", message => {
@@ -449,8 +463,9 @@ function history(channel) {
     channel.fetchMessages({ limit: HistoryLength }).then(messages => {
         for (var i = messages.size - 1; -1 < i; i--) {
             showMessage(messages.array()[i]);
-            messages.array()[i].acknowledge();
+            messages.array()[i];
         }
+        channel.acknowledge;
     });
 }
 
