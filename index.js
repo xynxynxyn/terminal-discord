@@ -117,6 +117,11 @@ client.on("ready", () => {
             history(channel);
         }
     });
+    client.on("messageUpdate", oldMessage => {
+        if (oldMessage.channel === channel) {
+            history(channel);
+        }
+    });
 
     //start listening
     rl.on("line", function(line) {
@@ -223,7 +228,7 @@ function command(cmd, arg) {
             last_message = client.user.lastMessage;
             if (last_message != undefined) {
                 if (last_message.deletable) {
-                    last_message.delete().then(history(channel));
+                    last_message.delete();
                 }
             }
             break;
@@ -232,7 +237,7 @@ function command(cmd, arg) {
             last_message = client.user.lastMessage;
             if (last_message != undefined) {
                 if (last_message.editable) {
-                    last_message.edit(arg).then(history(channel));
+                    last_message.edit(arg);
                 }
             }
             break;
