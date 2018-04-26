@@ -100,7 +100,7 @@ client.on("ready", () => {
     rl.setPrompt(prompt);
     if (defaultGuild != null && defaultChannel != null) {
         if (
-            guildList()[defaultGuild] != undefined && 
+            guildList()[defaultGuild] != undefined &&
             channelsList(guildList()[defaultGuild])[defaultChannel] != undefined
         ) {
             channel = channelsList(guildList()[defaultGuild])[defaultChannel];
@@ -140,9 +140,14 @@ client.on("ready", () => {
     rl.on("line", function(line) {
         if (line[0] === "/" && line.length > 1) {
             //check for command
-            var cmd = line.match(/[a-z,A-Z]+\b/)[0];
-            var arg = line.substr(cmd.length + 2, line.length);
-            command(cmd.toLowerCase(), arg);
+            var parse = line.match(/[a-z,A-Z]+\b/);
+            if (parse != null) {
+                var cmd = parse[0];
+                var arg = line.substr(cmd.length + 2, line.length);
+                command(cmd.toLowerCase(), arg);
+            } else {
+                command("No command specified", "");
+            }
         } else {
             //send a message
             if (line === "") {
