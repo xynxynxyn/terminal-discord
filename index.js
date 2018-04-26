@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-process.stdout.write("\033]0;terminal-discord\007");
 const Discord = require("discord.js");
 const fs = require("fs");
 const readline = require("readline");
@@ -91,6 +90,7 @@ if (fs.existsSync(configPath)) {
 //login with user token
 clear();
 login(token);
+title("terminal-discord");
 
 client.on("ready", () => {
     console_out("User " + client.user.username + " successfully logged in");
@@ -104,6 +104,7 @@ client.on("ready", () => {
             channelsList(guildList()[defaultGuild])[defaultChannel] != undefined
         ) {
             channel = channelsList(guildList()[defaultGuild])[defaultChannel];
+            title("#" + channel.name);
         } else {
             console_out(
                 "Default guild and/or channel is not correct...\nEntering menu..."
@@ -211,6 +212,7 @@ function menu() {
                 }
                 if (-1 < channel_index && channel_index < channels.length) {
                     var channel = channels[channel_index];
+                    title("#" + channel.name);
                     return channel;
                 } else if (channel_index === -1) {
                     break;
@@ -220,6 +222,11 @@ function menu() {
             process.exit(-1);
         }
     }
+}
+
+//Change window title
+function title(text) {
+    process.stdout.write("\033]0;" + text + "\007");
 }
 
 //Commands
