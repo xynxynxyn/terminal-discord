@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+process.stdout.write("\033]0;terminal-discord\007");
 const Discord = require("discord.js");
 const fs = require("fs");
 const readline = require("readline");
