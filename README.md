@@ -40,7 +40,7 @@ Seperator between username and message content.
 
 ### HistoryLength
 
-Number of messages loaded at a time.
+Number of messages loaded at a time. If set to null will fetch as many messages as there are rows in the current terminal window.
 
 ### defaultGuild
 

@@ -25,7 +25,7 @@ if (fs.existsSync(configPath)) {
     var MaxNameLength = null;
     var allign = true;
     var seperator = ">";
-    var HistoryLength = 70;
+    var HistoryLength = null;
     var defaultGuild = null;
     var defaultChannel = null;
     var colorsupport = true;
@@ -151,12 +151,10 @@ client.on("ready", () => {
             }
         } else {
             //send a message
-            if (line === "") {
-                history(channel);
-            } else {
-                history(channel);
+            history(channel);
+            if (line !== "") {
                 channel.send(line);
-                rl.prompt(true);
+                rl.prompt();
             }
         }
     });
@@ -471,7 +469,8 @@ function getConfigPath() {
 
 //fetch an array of the last N messages
 function history(channel) {
-    channel.fetchMessages({ limit: HistoryLength }).then(messages => {
+    n = (HistoryLength == null) ? process.stdout.rows: HistoryLength;
+    channel.fetchMessages({ limit: n}).then(messages => {
         for (var i = messages.size - 1; -1 < i; i--) {
             showMessage(messages.array()[i]);
             messages.array()[i];
