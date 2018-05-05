@@ -469,8 +469,8 @@ function getConfigPath() {
 
 //fetch an array of the last N messages
 function history(channel) {
-    n = (HistoryLength == null) ? process.stdout.rows: HistoryLength;
-    channel.fetchMessages({ limit: n}).then(messages => {
+    n = HistoryLength == null ? process.stdout.rows : HistoryLength;
+    channel.fetchMessages({ limit: n }).then(messages => {
         for (var i = messages.size - 1; -1 < i; i--) {
             showMessage(messages.array()[i]);
             messages.array()[i];
@@ -482,7 +482,7 @@ function history(channel) {
 function showMessage(message) {
     var content = message.cleanContent;
     //emote check
-    content = content.replace(/<:/g, "");
+    content = content.replace(/<a*:/g, "");
     content = content.replace(/\:\d*>/g, "");
     var date = message.createdAt;
     var timestamp = "";
