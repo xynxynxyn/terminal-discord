@@ -1,6 +1,6 @@
 # Terminal-Discord
 
-![terminal-discord](https://image.ibb.co/iEMbsR/examplediscord.png)
+![terminal-discord](scrot.png)
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
