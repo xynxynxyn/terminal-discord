@@ -59,11 +59,11 @@ If the item is on another page then the index is
 
 For example if the guild is the 5th option on the 2nd page the index corresponds to 
 
-*(5-2)+(2-1)*8 = 11*
+*(5 - 2) + (2 - 1) * 8 = 11*
 
 and if the channel is the 3rd option on the 2nd page the channel index should be
 
-*(3-2)+(2-1)*8 = 9*
+*(3 - 2) + (2 - 1) * 8 = 9*
 
 ### prompt
 The prompt used.
