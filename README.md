@@ -74,6 +74,9 @@ Wether the username should be displayed in front of the prompt.
 ### colorsupport
 Wether color for usernames is enabled or not.
 
+### defaultColor
+Default color for users without a role. If not set will default to #FFFFFF.
+
 ### mentionColor
 What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
 

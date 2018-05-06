@@ -29,6 +29,7 @@ if (fs.existsSync(configPath)) {
     var defaultGuild = null;
     var defaultChannel = null;
     var colorsupport = true;
+    var defaultColor = "#FFFFFF";
     var mentionColor = true;
     var usenick = true;
     var datesupport = false;
@@ -54,6 +55,9 @@ if (fs.existsSync(configPath)) {
     }
     if (config.colorsupport != undefined) {
         colorsupport = config.colorsupport;
+    }
+    if (config.defaultColor != undefined) {
+        defaultColor = config.defaultColor;
     }
     if (config.mentionColor != undefined) {
         mentionColor = config.mentionColor;
@@ -530,6 +534,8 @@ function showMessage(message) {
         var color = message.member.displayHexColor;
         if (color != "#000000") {
             author = chalk.hex(color)(author);
+        } else {
+            author = chalk.hex(defaultColor)(author);
         }
     }
     if (
