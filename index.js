@@ -167,11 +167,7 @@ client.on("ready", () => {
 //Handle errors
 client.on("error", error => {
     clear();
-    console_out("Error encountered...");
-    console_out(error.message);
-    rl.pause();
-    rlSync.keyInPause("");
-    rl.resume();
+    console_out("[Connection error occurred]");
 });
 
 //Functions
