@@ -530,10 +530,14 @@ function showMessage(message) {
             author = author.slice(0, MaxNameLength);
         }
     }
-    if (colorsupport && message.member != null) {
-        var color = message.member.displayHexColor;
-        if (color != "#000000") {
-            author = chalk.hex(color)(author);
+    if (colorsupport) {
+        if (message.member != null) {
+            var color = message.member.displayHexColor;
+            if (color != "#000000") {
+                author = chalk.hex(color)(author);
+            } else {
+                author = chalk.hex(defaultColor)(author);
+            }
         } else {
             author = chalk.hex(defaultColor)(author);
         }
