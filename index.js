@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+
 const Discord = require("discord.js");
 const fs = require("fs");
 const readline = require("readline");
@@ -127,6 +128,7 @@ client.on("ready", () => {
     //when a message is recieved display the last n messages
     client.on("message", message => {
         if (message.channel === channel) {
+            message.acknowledge();
             showMessage(message);
         }
     });
@@ -307,9 +309,9 @@ function command(cmd, arg) {
                     }
                     console_out(
                         "  " +
-                            membersList[i].user.presence.status.slice(0, 3) +
-                            "  " +
-                            name
+                        membersList[i].user.presence.status.slice(0, 3) +
+                        "  " +
+                        name
                     );
                 }
                 rl.pause();
@@ -362,6 +364,7 @@ function group_channels() {
         })
         .reverse();
 }
+
 function dm_channels() {
     var channel_list = client.channels.filterArray(
         channel => channel.type === "dm"
@@ -479,11 +482,13 @@ function getConfigPath() {
 
 //fetch an array of the last N messages
 function history(channel) {
+    channel.acknowledge();
     n = HistoryLength == null ? process.stdout.rows : HistoryLength;
-    channel.fetchMessages({ limit: n }).then(messages => {
-        for (var i = messages.size - 1; -1 < i; i--) {
+    channel.fetchMessages({
+        limit: n
+    }).then(messages => {
+        for (var i = messages.size - 1; - 1 < i; i--) {
             showMessage(messages.array()[i]);
-            messages.array()[i];
         }
     });
 }
