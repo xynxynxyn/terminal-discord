@@ -19,14 +19,17 @@ $terminal-discord PATH\_TO\_CONFIG
 
 All settings except Token are optional. Defaults can be found at the beginning of index.js where the config-file is parsed.
 
-### Token
+Check the example config in the repository for an example.
 
-Terminal-Discord uses a token to login rather than email and password since discord.js doesn't support that method anymore.
-To retrieve your token open up your Discord client and press Ctrl-Shift-I. Navigate to the Application tab and find the token in the local storage.
+### token
 
-![Token](https://image.ibb.co/iXBLK6/discord_token.png)
+Discord has made token retrieval more difficult after recent updates. To find your token you have to navigate to the discord browser site, open the developer tools with ctrl+shift+i or similar and find the local storage as shown in the picture.
 
-### MaxNameLength
+Once you reload the page the token will pop up for about a second. Copy it and paste it in the config-file.
+
+![Token](token.png)
+
+### max_name_length
 
 The maximum length of usernames. If the value is null usernames are not cut short.
 
@@ -34,19 +37,19 @@ The maximum length of usernames. If the value is null usernames are not cut shor
 
 If set to false the seperators will be displayed right after the username instead of them being alligned with other seperators.
 
-### Seperator
+### separator
 
-Seperator between username and message content.
+Separator between username and message content.
 
-### HistoryLength
+### history_length
 
 Number of messages loaded at a time. If set to null will fetch as many messages as there are rows in the current terminal window.
 
-### defaultGuild
+### default_guild
 
 If not null this corresponds to the index of the guild you want selected at startup.
 
-### defaultChannel
+### default_channel
 If not null this corresponds to the index of the channel you want selected at startup.
 
 If the item is on the first page of the selection interface then the index is
@@ -68,25 +71,22 @@ and if the channel is the 3rd option on the 2nd page the channel index should be
 ### prompt
 The prompt used.
 
-### displayuser
-Wether the username should be displayed in front of the prompt.
-
-### colorsupport
+### color_support
 Wether color for usernames is enabled or not.
 
-### defaultColor
+### default_color
 Default color for users without a role. If not set will default to #FFFFFF.
 
-### mentionColor
+### mention_color
 What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
 
-### usenick
-Wether the nickname should be displayed when available.
+### use_nickname
+Whether the nickname should be displayed when available.
 
-### time
+### show_time
 Show the timestamp next to a message.
 
-### date
+### show_date
 Enable date support to display DD.MM.YYYY in front of the time.
 
 
