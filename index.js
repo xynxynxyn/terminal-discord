@@ -209,7 +209,11 @@ function parse_config() {
   }
 
   if (config["token"] === "") {
-    exit("Config file " + config_path + " does not contain a token.\n Refer to the README.md for retrieving your token.");
+    exit(
+      "Config file " +
+        config_path +
+        " does not contain a token.\n Refer to the README.md for retrieving your token."
+    );
   }
 
   return config;
@@ -243,9 +247,12 @@ function get_config_path() {
         install_path = homedir + "/.terminal-discord";
       }
 
-      fs.writeFileSync(install_path + "/config.json", '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true\n}');
-        console_out("Created a config file in " + install_path);
-        return install_path + "config.json";
+      fs.writeFileSync(
+        install_path + "/config.json",
+        '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true\n}'
+      );
+      console_out("Created a config file in " + install_path);
+      return install_path + "config.json";
     } else {
       exit("Exiting...");
     }
