@@ -7,9 +7,7 @@ A simple terminal based client for Discord using the [discord.js](https://discor
 If you have any questions feel free to join this [server](https://discord.gg/ZBX4Xyh). 
 
 ## Installation
-Clone the repository to a directory of your choice.
-Find your token and add it to the config file.
-Run sudo ./install.sh
+Install with `npm install -g terminal-discord`
 
 ## Config-File
 
