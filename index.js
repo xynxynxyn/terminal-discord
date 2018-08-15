@@ -100,7 +100,7 @@ function init() {
         if (guild === undefined) {
             console_out("No guild selected.\nShowing direct messages...");
             rl.pause();
-            rl_sync.keyInPause("--Press-Any-Key--");
+            rl_sync.keyInPause(" ");
             rl.resume();
             channel = select_other();
             if (channel === undefined) {
@@ -503,7 +503,7 @@ function command(cmd, arg) {
                     )
                 );
                 rl.pause();
-                rl_sync.keyInPause("--Press-Any-Key--");
+                rl_sync.keyInPause(" ");
                 rl.resume();
             }
 
@@ -524,7 +524,7 @@ function command(cmd, arg) {
         case "info":
             channel_info();
             rl.pause();
-            rl_sync.keyInPause("--Press-Any-Key--");
+            rl_sync.keyInPause(" ");
             rl.resume();
             clear_screen();
             history();
