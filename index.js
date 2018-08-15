@@ -486,16 +486,20 @@ function command(cmd, arg) {
     case "d":
     case "delete":
       last_message = client.user.lastMessage;
-      if (last_message !== undefined && last_message.deletable) {
+      if (last_message !== null && last_message.deletable) {
         last_message.delete();
       }
+      clear_screen();
+      history();
       break;
     case "e":
     case "edit":
       last_message = client.user.lastMessage;
-      if (last_message !== undefined && last_message.editable) {
+      if (last_message !== null && last_message.editable) {
         last_message.edit(arg);
       }
+      clear_screen();
+      history();
       break;
     case "m":
     case "menu":
