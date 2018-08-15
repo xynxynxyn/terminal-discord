@@ -52,21 +52,8 @@ If not null this corresponds to the index of the guild you want selected at star
 ### default_channel
 If not null this corresponds to the index of the channel you want selected at startup.
 
-If the item is on the first page of the selection interface then the index is
+To get the indices for both guild and channel navigate to your channel and use the /info command.
 
-*displayed\_number -1*
-
-If the item is on another page then the index is
-
-*displayed\_number -2 + (page\_number - 1) * 8*
-
-For example if the guild is the 5th option on the 2nd page the index corresponds to 
-
-*(5 - 2) + (2 - 1) * 8 = 11*
-
-and if the channel is the 3rd option on the 2nd page the channel index should be
-
-*(3 - 2) + (2 - 1) * 8 = 9*
 
 ### prompt
 The prompt used.
@@ -111,6 +98,8 @@ __o__, __online__: show a list of currently online users
 __g__, __gr__, __group__: open group chat selection menu to switch to a different channel
 
 __dm__, __pm__: open dm chat selection menu to switch to a different channel
+
+__i__, __info__: display basic information about the channel including indices
 
 
 Note that edit and delete only work on messages sent in the current session. If you haven't sent a message in the current session the command will do nothing.

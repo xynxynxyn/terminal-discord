@@ -95,29 +95,29 @@ function get_default_channel() {
 // Menu that selects a channel from nothing
 function init() {
     // Check if default guild and channel are set in config
-        while (true) {
-            guild = select_guild();
-            if (guild === undefined) {
-                console_out("No guild selected.\nShowing direct messages...");
-                rl.pause();
-                rl_sync.keyInPause("");
-                rl.resume();
-                channel = select_other();
-                if (channel === undefined) {
-                    exit("No channel selected. Exiting...");
-                } else {
-                    return;
-                }
-            }
-
-            while (true) {
-                channel = select_channel();
-                if (channel === undefined) {
-                    break;
-                }
+    while (true) {
+        guild = select_guild();
+        if (guild === undefined) {
+            console_out("No guild selected.\nShowing direct messages...");
+            rl.pause();
+            rl_sync.keyInPause("--Press-Any-Key--");
+            rl.resume();
+            channel = select_other();
+            if (channel === undefined) {
+                exit("No channel selected. Exiting...");
+            } else {
                 return;
             }
         }
+
+        while (true) {
+            channel = select_channel();
+            if (channel === undefined) {
+                break;
+            }
+            return;
+        }
+    }
 }
 
 // Returns the index of the selected guild
@@ -351,6 +351,42 @@ function show_message(message) {
     );
 }
 
+// Shows info for the currently selected channel
+function channel_info() {
+    clear_screen();
+    let name = "";
+    let guild_name = "";
+    let guild_index = "";
+    let channel_index = "";
+    if (channel.type === "text") {
+        name = channel.name;
+        guild_name = guild.name;
+        guild_index = client.guilds.array().indexOf(guild);
+        channel_index = guild.channels
+            .array()
+            .filter(c => c.type === "text")
+            .indexOf(channel);
+    } else if (channel.type === "dm") {
+        name = channel.recipient;
+    } else if (channel.type === "group") {
+        name = channel.recipients.join();
+    }
+    console_out(
+        "Info for channel " +
+        name +
+        "\nguild: " +
+        guild_name +
+        "\nguild_index: " +
+        guild_index +
+        "\nchannel_index: " +
+        channel_index +
+        "\ncreated_at: " +
+        channel.createdAt +
+        "\ntype: " +
+        channel.type
+    );
+}
+
 // Select an item from a list and return the index
 function select_item(items) {
     if (!items || !items.length) {
@@ -467,7 +503,7 @@ function command(cmd, arg) {
                     )
                 );
                 rl.pause();
-                rl_sync.keyInPause("");
+                rl_sync.keyInPause("--Press-Any-Key--");
                 rl.resume();
             }
 
@@ -481,6 +517,15 @@ function command(cmd, arg) {
         case "group":
             new_channel = select_other();
             channel = new_channel === undefined ? channel : new_channel;
+            clear_screen();
+            history();
+            break;
+        case "i":
+        case "info":
+            channel_info();
+            rl.pause();
+            rl_sync.keyInPause("--Press-Any-Key--");
+            rl.resume();
             clear_screen();
             history();
             break;
