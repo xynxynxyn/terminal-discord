@@ -56,6 +56,14 @@ To get the indices for both guild and channel navigate to your channel and use t
 ### prompt
 The prompt used.
 
+`%u` is replaced by your usernmame.
+
+`%d` by your nickname if present otherwise username.
+
+`%c` will be replaced by the channel name.
+
+`%g` is replaced by the guild name.
+
 ### color_support
 Wether color for usernames is enabled or not.
 

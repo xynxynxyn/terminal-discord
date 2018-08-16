@@ -11,7 +11,7 @@ const client = new discord.Client();
 const config = parse_config();
 
 // Global non const variables
-let prompt = config["prompt"];
+let prompt;
 let guild = null;
 let channel = null;
 
@@ -22,8 +22,7 @@ client.login(config["token"]);
 // Client events
 client.on("ready", () => {
   console_out("User" + client.user.username + " successfully logged in");
-
-  rl.setPrompt(prompt);
+  update_prompt();
 
   let default_status = get_default_channel();
   if (!default_status) {
@@ -85,6 +84,7 @@ function get_default_channel() {
     if (guild !== undefined) {
       channel = guild.channels.array()[config["default_channel"]];
       if (channel != undefined) {
+  			update_prompt();
         return true;
       }
     }
@@ -106,6 +106,7 @@ function init() {
       if (channel === undefined) {
         exit("No channel selected. Exiting...");
       } else {
+				update_prompt();
         return;
       }
     }
@@ -115,6 +116,7 @@ function init() {
       if (channel === undefined) {
         break;
       }
+			update_prompt();
       return;
     }
   }
@@ -381,26 +383,20 @@ function show_message(message) {
 // Shows info for the currently selected channel
 function channel_info() {
   clear_screen();
-  let name = "";
   let guild_name = "";
   let guild_index = "";
   let channel_index = "";
   if (channel.type === "text") {
-    name = channel.name;
     guild_name = guild.name;
     guild_index = client.guilds.array().indexOf(guild);
     channel_index = guild.channels
       .array()
       .filter(c => c.type === "text")
       .indexOf(channel);
-  } else if (channel.type === "dm") {
-    name = channel.recipient;
-  } else if (channel.type === "group") {
-    name = channel.recipients.join();
   }
   console_out(
     "Info for channel " +
-      name +
+      channel_name() +
       "\nguild: " +
       guild_name +
       "\nguild_index: " +
@@ -412,6 +408,39 @@ function channel_info() {
       "\ntype: " +
       channel.type
   );
+}
+
+// parse and update prompt
+function update_prompt() {
+  let raw_prompt = config["prompt"];
+
+  prompt = raw_prompt
+    .replace("%u", client.user.username)
+    .replace(
+      "%d",
+      channel !== null && channel !== undefined && channel.type === "text"
+        ? guild.me.displayName
+        : client.user.username
+    )
+    .replace("%c", channel_name())
+    .replace("%g", guild !== null && guild !== undefined ? guild.name : "");
+
+  rl.setPrompt(prompt);
+}
+
+function channel_name() {
+  if (channel === null) {
+    return "";
+  }
+
+  if (channel.type === "text") {
+    return channel.name;
+  } else if (channel.type === "dm") {
+    return channel.recipient.username;
+  } else if (channel.type === "group") {
+    return channel.recipients.map(r => r.username).join();
+  }
+  return "";
 }
 
 // Select an item from a list and return the index
@@ -511,6 +540,7 @@ function command(cmd, arg) {
     case "channel":
       new_channel = select_channel();
       channel = new_channel === undefined ? channel : new_channel;
+			update_prompt();
       clear_screen();
       history();
       break;
