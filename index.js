@@ -55,7 +55,6 @@ client.on("ready", () => {
 
 client.on("message", message => {
   if (message.channel === channel) {
-    message.acknowledge();
     show_message(message);
   }
 });
@@ -279,7 +278,6 @@ function console_out(msg) {
 }
 
 function history() {
-  channel.acknowledge();
   n =
     config["history_length"] === null
       ? process.stdout.rows
