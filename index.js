@@ -83,6 +83,7 @@ function get_default_channel() {
     if (guild !== undefined) {
       channel = guild.channels.array()[config["default_channel"]];
       if (channel != undefined) {
+				set_title("#" + channel_name());
   			update_prompt();
         return true;
       }
@@ -105,6 +106,7 @@ function init() {
       if (channel === undefined) {
         exit("No channel selected. Exiting...");
       } else {
+				set_title("#" + channel_name());
 				update_prompt();
         return;
       }
@@ -115,6 +117,7 @@ function init() {
       if (channel === undefined) {
         break;
       }
+			set_title("#" + channel_name());
 			update_prompt();
       return;
     }
@@ -439,6 +442,10 @@ function channel_name() {
     return channel.recipients.map(r => r.username).join();
   }
   return "";
+}
+
+function set_title(title) {
+	process.stdout.write("\033]0;" + title + "\007");
 }
 
 // Select an item from a list and return the index
