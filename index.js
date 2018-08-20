@@ -314,7 +314,6 @@ function update() {
 	rl.write(null, {name: "enter"})
   messages.forEach(m => show_message(m));
 	rl.write(input);
-	process.stdin.setRawMode(false);
 }
 
 // Fill messages array with messages from channel
