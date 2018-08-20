@@ -3,9 +3,13 @@
 const discord = require("discord.js");
 const fs = require("fs");
 const readline = require("readline");
-const rl_sync = require("readline-sync");
-const chalk = require("chalk");
-const rl = readline.createInterface(process.stdin, process.stdout);
+const rl_sync = require("readline-sync"); const chalk = require("chalk");
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout,
+})
+process.stdin.setEncoding("utf8");
+process.stdout.setEncoding("utf8");
 const client = new discord.Client();
 
 const config = parse_config();
@@ -39,9 +43,10 @@ client.on("ready", () => {
     // Check for command
     if (
       line.length >= NO_SEND.length &&
-      line.substring(line.length - NO_SEND.length) === NO_SEND
+      line.substr(line.length - NO_SEND.length) === NO_SEND
     ) {
-      input = line.substring(0, line.length - NO_SEND.length);
+			console_out("line: " + line);
+      input = line.substr(0, line.length - NO_SEND.length);
     } else if (line[0] === "/" && line.length > 1) {
       let parse = line.match(/[a-z,A-Z]+\b/);
       if (parse !== null) {
@@ -96,6 +101,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => {
 client.on("error", err => {
   console_out("[Connection error]");
 });
+
 
 // Functions
 
@@ -303,9 +309,12 @@ function console_out(msg) {
 }
 
 function update() {
-  rl.write(NO_SEND + "\n");
+  rl.write(NO_SEND);
+	process.stdin.setRawMode(true);
+	rl.write(null, {name: "enter"})
   messages.forEach(m => show_message(m));
-  rl.write(input);
+	rl.write(input);
+	process.stdin.setRawMode(false);
 }
 
 // Fill messages array with messages from channel
