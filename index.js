@@ -9,11 +9,14 @@ const rl = readline.createInterface(process.stdin, process.stdout);
 const client = new discord.Client();
 
 const config = parse_config();
+const NO_SEND = "&$&no_send";
 
 // Global non const variables
 let prompt;
 let guild = null;
 let channel = null;
+let input = "";
+let messages = [];
 
 clear_screen();
 console_out("Logging in...");
@@ -34,7 +37,12 @@ client.on("ready", () => {
   // Readline listener
   rl.on("line", line => {
     // Check for command
-    if (line[0] === "/" && line.length > 1) {
+    if (
+      line.length >= NO_SEND.length &&
+      line.substring(line.length - NO_SEND.length) === NO_SEND
+    ) {
+      input = line.substring(0, line.length - NO_SEND.length);
+    } else if (line[0] === "/" && line.length > 1) {
       let parse = line.match(/[a-z,A-Z]+\b/);
       if (parse !== null) {
         let cmd = parse[0];
@@ -44,7 +52,7 @@ client.on("ready", () => {
         command("", "");
       }
     } else {
-      history(channel);
+      update();
       if (line !== "") {
         channel.send(line);
         rl.prompt();
@@ -55,19 +63,33 @@ client.on("ready", () => {
 
 client.on("message", message => {
   if (message.channel === channel) {
-    show_message(message);
+		// remove first message
+		messages.slice(1);
+		// add new message to end of array
+    messages.push(message);
+		// print new messages
+		update();
   }
 });
 
 client.on("messageDelete", message => {
   if (message.channel === channel) {
-    history(channel);
+		let i = messages.indexOf(message);
+		if (i !== -1) {
+			messages.splice(i, 1);
+		}
+		update();
   }
 });
 
-client.on("messageUpdate", message => {
-  if (message.channel === channel) {
-    history(channel);
+client.on("messageUpdate", (oldMessage, newMessage)=> {
+  if (oldMessage.channel === channel) {
+		console_out("odl: " + oldMessage.content + " new: " + newMessage.content)
+		let i = messages.indexOf(oldMessage);
+		if (i !== -1) {
+			messages[i] = newMessage;
+		}
+		update();
   }
 });
 
@@ -280,6 +302,13 @@ function console_out(msg) {
   rl.prompt(true);
 }
 
+function update() {
+  rl.write(NO_SEND + "\n");
+  messages.forEach(m => show_message(m));
+  rl.write(input);
+}
+
+// Fill messages array with messages from channel
 function history() {
   n =
     config["history_length"] === null
@@ -289,11 +318,9 @@ function history() {
     .fetchMessages({
       limit: n
     })
-    .then(messages => {
-      messages
-        .array()
-        .reverse()
-        .forEach(m => show_message(m));
+    .then(m => {
+      messages = m.array().reverse();
+			update();
     });
 }
 
@@ -390,9 +417,7 @@ function channel_info() {
   if (channel.type === "text") {
     guild_name = guild.name;
     guild_index = client.guilds.array().indexOf(guild);
-    channel_index = guild.channels
-      .array()
-      .indexOf(channel);
+    channel_index = guild.channels.array().indexOf(channel);
   }
   console_out(
     "Info for channel " +
@@ -514,7 +539,7 @@ function command(cmd, arg) {
     case "u":
     case "r":
       clear_screen();
-      history();
+			history();
       break;
     case "d":
     case "delete":
@@ -523,7 +548,7 @@ function command(cmd, arg) {
         last_message.delete();
       }
       clear_screen();
-      history();
+      update();
       break;
     case "e":
     case "edit":
@@ -532,13 +557,13 @@ function command(cmd, arg) {
         last_message.edit(arg);
       }
       clear_screen();
-      history();
+      update();
       break;
     case "m":
     case "menu":
       clear_screen();
       init();
-      history();
+			history();
       break;
     case "c":
     case "channel":
@@ -546,7 +571,7 @@ function command(cmd, arg) {
       channel = new_channel === undefined ? channel : new_channel;
       update_prompt();
       clear_screen();
-      history();
+			history();
       break;
     case "o":
     case "online":
@@ -573,7 +598,7 @@ function command(cmd, arg) {
       }
 
       clear_screen();
-      history();
+      update();
       break;
     case "pm":
     case "dm":
@@ -583,7 +608,7 @@ function command(cmd, arg) {
       new_channel = select_other();
       channel = new_channel === undefined ? channel : new_channel;
       clear_screen();
-      history();
+			history();
       break;
     case "i":
     case "info":
@@ -592,7 +617,7 @@ function command(cmd, arg) {
       rl_sync.keyInPause(" ");
       rl.resume();
       clear_screen();
-      history();
+      update();
       break;
     default:
       console_out("Unknown command");
