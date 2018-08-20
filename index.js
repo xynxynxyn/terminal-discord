@@ -63,33 +63,33 @@ client.on("ready", () => {
 
 client.on("message", message => {
   if (message.channel === channel) {
-		// remove first message
-		messages.slice(1);
-		// add new message to end of array
+    // remove first message
+    messages.slice(1);
+    // add new message to end of array
     messages.push(message);
-		// print new messages
-		update();
+    // print new messages
+    update();
   }
 });
 
 client.on("messageDelete", message => {
   if (message.channel === channel) {
-		let i = messages.indexOf(message);
-		if (i !== -1) {
-			messages.splice(i, 1);
-		}
-		update();
+    let i = messages.indexOf(message);
+    if (i !== -1) {
+      messages.splice(i, 1);
+    }
+    update();
   }
 });
 
-client.on("messageUpdate", (oldMessage, newMessage)=> {
+client.on("messageUpdate", (oldMessage, newMessage) => {
   if (oldMessage.channel === channel) {
-		console_out("odl: " + oldMessage.content + " new: " + newMessage.content)
-		let i = messages.indexOf(oldMessage);
-		if (i !== -1) {
-			messages[i] = newMessage;
-		}
-		update();
+    console_out("odl: " + oldMessage.content + " new: " + newMessage.content);
+    let i = messages.indexOf(oldMessage);
+    if (i !== -1) {
+      messages[i] = newMessage;
+    }
+    update();
   }
 });
 
@@ -320,7 +320,7 @@ function history() {
     })
     .then(m => {
       messages = m.array().reverse();
-			update();
+      update();
     });
 }
 
@@ -539,7 +539,7 @@ function command(cmd, arg) {
     case "u":
     case "r":
       clear_screen();
-			history();
+      history();
       break;
     case "d":
     case "delete":
@@ -563,7 +563,7 @@ function command(cmd, arg) {
     case "menu":
       clear_screen();
       init();
-			history();
+      history();
       break;
     case "c":
     case "channel":
@@ -571,7 +571,7 @@ function command(cmd, arg) {
       channel = new_channel === undefined ? channel : new_channel;
       update_prompt();
       clear_screen();
-			history();
+      history();
       break;
     case "o":
     case "online":
@@ -608,7 +608,7 @@ function command(cmd, arg) {
       new_channel = select_other();
       channel = new_channel === undefined ? channel : new_channel;
       clear_screen();
-			history();
+      history();
       break;
     case "i":
     case "info":
