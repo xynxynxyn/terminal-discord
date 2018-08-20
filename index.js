@@ -82,9 +82,9 @@ function get_default_channel() {
     guild = client.guilds.array()[config["default_guild"]];
     if (guild !== undefined) {
       channel = guild.channels.array()[config["default_channel"]];
-      if (channel != undefined) {
-				set_title("#" + channel_name());
-  			update_prompt();
+      if (channel !== undefined) {
+        set_title("#" + channel_name());
+        update_prompt();
         return true;
       }
     }
@@ -106,8 +106,8 @@ function init() {
       if (channel === undefined) {
         exit("No channel selected. Exiting...");
       } else {
-				set_title("#" + channel_name());
-				update_prompt();
+        set_title("#" + channel_name());
+        update_prompt();
         return;
       }
     }
@@ -117,8 +117,8 @@ function init() {
       if (channel === undefined) {
         break;
       }
-			set_title("#" + channel_name());
-			update_prompt();
+      set_title("#" + channel_name());
+      update_prompt();
       return;
     }
   }
@@ -392,7 +392,6 @@ function channel_info() {
     guild_index = client.guilds.array().indexOf(guild);
     channel_index = guild.channels
       .array()
-      .filter(c => c.type === "text")
       .indexOf(channel);
   }
   console_out(
@@ -445,7 +444,7 @@ function channel_name() {
 }
 
 function set_title(title) {
-	process.stdout.write("\033]0;" + title + "\007");
+  process.stdout.write("\033]0;" + title + "\007");
 }
 
 // Select an item from a list and return the index
@@ -545,7 +544,7 @@ function command(cmd, arg) {
     case "channel":
       new_channel = select_channel();
       channel = new_channel === undefined ? channel : new_channel;
-			update_prompt();
+      update_prompt();
       clear_screen();
       history();
       break;
