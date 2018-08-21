@@ -3,11 +3,13 @@
 const discord = require("discord.js");
 const fs = require("fs");
 const readline = require("readline");
-const rl_sync = require("readline-sync"); const chalk = require("chalk");
+const rl_sync = require("readline-sync");
+const chalk = require("chalk");
 const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-})
+  input: process.stdin,
+  output: process.stdout,
+  completer: cmd_complete
+});
 process.stdin.setEncoding("utf8");
 process.stdout.setEncoding("utf8");
 const client = new discord.Client();
@@ -45,7 +47,6 @@ client.on("ready", () => {
       line.length >= NO_SEND.length &&
       line.substr(line.length - NO_SEND.length) === NO_SEND
     ) {
-			console_out("line: " + line);
       input = line.substr(0, line.length - NO_SEND.length);
     } else if (line[0] === "/" && line.length > 1) {
       let parse = line.match(/[a-z,A-Z]+\b/);
@@ -101,7 +102,6 @@ client.on("messageUpdate", (oldMessage, newMessage) => {
 client.on("error", err => {
   console_out("[Connection error]");
 });
-
 
 // Functions
 
@@ -310,10 +310,10 @@ function console_out(msg) {
 
 function update() {
   rl.write(NO_SEND);
-	process.stdin.setRawMode(true);
-	rl.write(null, {name: "enter"})
+  process.stdin.setRawMode(true);
+  rl.write(null, { name: "enter" });
   messages.forEach(m => show_message(m));
-	rl.write(input);
+  rl.write(input);
 }
 
 // Fill messages array with messages from channel
@@ -478,6 +478,20 @@ function channel_name() {
 
 function set_title(title) {
   process.stdout.write("\033]0;" + title + "\007");
+}
+
+function cmd_complete(line) {
+  const completions = "/quit /update /delete /edit /menu /channel /online /dm /info".split(
+    " "
+  );
+  let hits = completions.filter(c => c.startsWith(line));
+  if (line === "/edit ") {
+    let last_message = client.user.lastMessage;
+    if (last_message !== null && last_message.editable) {
+      hits = ["/edit " + last_message.cleanContent];
+    }
+  }
+  return [hits.length ? hits : completions, line];
 }
 
 // Select an item from a list and return the index
