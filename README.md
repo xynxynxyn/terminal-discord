@@ -95,7 +95,9 @@ __nick__: changes your nickname
 
 __d__, __delete__: deletes the last sent message
 
-__e__, __edit__: replace the content of your last sent message with the string after /e
+__e__, __edit__: replace the content of your last sent message with the string after /e. Pressing tab after "/edit " fills in the previous message.
+
+__c__, __channel__: select a different channel within the same guild
 
 __m__, __menu__: open the channel selection menu to switch to a different channel
 
