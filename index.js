@@ -481,8 +481,8 @@ function set_title(title) {
 }
 
 function cmd_complete(line) {
-  const completions = "/quit /update /delete /edit /menu /channel /online /dm /info".split(
-    " "
+  const completions = "/quit,/update,/delete,/edit ,/menu,/channel,/online,/dm,/info".split(
+    ","
   );
   let hits = completions.filter(c => c.startsWith(line));
   if (line === "/edit ") {
