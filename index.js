@@ -114,7 +114,6 @@ client.on("messageDelete", message => {
 
 client.on("messageUpdate", (oldMessage, newMessage) => {
   if (oldMessage.channel === channel) {
-    console_out("old: " + oldMessage.content + " new: " + newMessage.content);
     let i = messages.indexOf(oldMessage);
     if (i !== -1) {
       messages[i] = newMessage;
