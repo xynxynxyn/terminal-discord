@@ -73,6 +73,9 @@ Default color for users without a role. If not set will default to #FFFFFF.
 ### mention_color
 What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
 
+### repeat_name
+When a user sends multiple messages in a row this controls whether their name should be displayed multiple times or be replaced with a dot.
+
 ### use_nickname
 Whether the nickname should be displayed when available.
 
