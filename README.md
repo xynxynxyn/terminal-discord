@@ -35,6 +35,9 @@ The maximum length of usernames. If the value is null usernames are not cut shor
 
 If set to false the seperators will be displayed right after the username instead of them being alligned with other seperators.
 
+### right_bound
+If allign is set to true then this option controls whether names are leftbound or rightbound.
+
 ### separator
 
 Separator between username and message content.

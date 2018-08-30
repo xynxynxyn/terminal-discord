@@ -219,7 +219,8 @@ function parse_config() {
     select_count: 8,
     color_support: true,
     show_embeds: true,
-		repeat_name: true
+    repeat_name: true,
+    right_bound: false
   };
 
   let user_config;
@@ -283,7 +284,7 @@ function get_config_path() {
 
       fs.writeFileSync(
         install_path + "/config.json",
-        '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true\n"repeat_name": true\n}'
+        '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true\n"repeat_name": true\n"right_bound": false\n}'
       );
       console_out("Created a config file in " + install_path);
       return install_path + "config.json";
@@ -371,13 +372,13 @@ function show_message(message) {
     author = message.member.displayName;
   }
 
-	if (!config["repeat_name"] && message.author.id === last_message_author) {
-		if (config["max_name_length"] !== null) {
-			author = " ".repeat(config["max_name_length"] - 1) + ".";
-		} else {
-			author = " ".repeat(author.length - 1) + ".";
-		}
-	}
+  if (!config["repeat_name"] && message.author.id === last_message_author) {
+    if (config["max_name_length"] !== null) {
+      author = " ".repeat(config["max_name_length"] - 1) + ".";
+    } else {
+      author = " ".repeat(author.length - 1) + ".";
+    }
+  }
 
   let attachment = config["show_embeds"]
     ? message.attachments
@@ -389,7 +390,11 @@ function show_message(message) {
   if (config["max_name_length"] !== null) {
     if (author.length < config["max_name_length"] && config["allign"]) {
       let x = config["max_name_length"] - author.length;
-      author = author + " ".repeat(x);
+      if (config["right_bound"]) {
+        author = " ".repeat(x) + author;
+      } else {
+        author = author + " ".repeat(x);
+      }
     } else if (author.length > config["max_name_length"]) {
       author = author.slice(0, config["max_name_length"]);
     }
@@ -425,7 +430,7 @@ function show_message(message) {
     timestamp + author + config["separator"] + attachment + " " + content
   );
 
-	last_message_author = message.author.id;
+  last_message_author = message.author.id;
 }
 
 // Shows info for the currently selected channel

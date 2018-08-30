@@ -15,5 +15,6 @@
   "select_count": 8,
   "color_support": true,
   "show_embeds": true,
-  "repeat_name": true
+  "repeat_name": true,
+  "right_bound": false
 }
