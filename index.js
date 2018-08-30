@@ -29,38 +29,62 @@ clear_screen();
 console_out("Logging in...");
 client.login(config["token"]);
 
-// Client events
+// ###################
+// ## Client events ##
+// ###################
+
 client.on("ready", () => {
   console_out("User" + client.user.username + " successfully logged in");
   update_prompt();
-
-  let default_status = get_default_channel();
-  if (!default_status) {
+  // Check if default guild and channel are set in config
+  if (!get_default_channel()) {
+    // no default channel was found via config
     init();
   }
 
+  // Show and save history of messages in chosen channel
   history();
 
   // Readline listener
   rl.on("line", line => {
-    // Check for command
+    // ---- PART OF HACK for https://github.com/xynxynxyn/terminal-discord/issues/11 ----
+    // Check if `NO_SEND` string is at the end of line ...
+    // ----
     if (
       line.length >= NO_SEND.length &&
       line.substr(line.length - NO_SEND.length) === NO_SEND
     ) {
+      // ... so we know that this line was meant to be our input and not meant for sending
       input = line.substr(0, line.length - NO_SEND.length);
-    } else if (line[0] === "/" && line.length > 1) {
+    }
+    // Check for input line which starts with a slash and continues. This **could** be a command.
+    else if (line[0] === "/" && line.length > 1) {
+      // The string between / and whitespace is the chosen command
       let parse = line.match(/[a-z,A-Z]+\b/);
       if (parse !== null) {
+        // A string was found. First occurrence is the command.
         let cmd = parse[0];
+        // Rest of line are the arguments
         let arg = line.substr(cmd.length + 2, line.length);
+        // Try to execute the command which possibly is unknown
         command(cmd.toLowerCase(), arg);
       } else {
+        // User entered a non valid string after slash. (Digits for example)
+        // Execute an empty command which will behave the same as an unknown command.
         command("", "");
       }
-    } else {
+    }
+    // No command in input line. Continue.
+    else {
+      // Show messages
+      // ---- PART OF HACK for https://github.com/xynxynxyn/terminal-discord/issues/11 ----
+      // `update()` will retrigger event listener due to `process.stdin.setRawMode(true)
+      // and `rl.write(null, {name : "enter" })` but that is no problem since we add `NO_SEND`
+      // to input before simulating sending of message => we will jump into body of first 'if'
+      // ----
       update();
       if (line !== "") {
+        // This will trigger `client.on("message", ...)`
         channel.send(line);
         rl.prompt();
       }
@@ -70,11 +94,11 @@ client.on("ready", () => {
 
 client.on("message", message => {
   if (message.channel === channel) {
-    // remove first message
+    // remove first message so we don't print more and more messages every time we update
     messages.slice(1);
     // add new message to end of array
     messages.push(message);
-    // print new messages
+    // print new message with old ones (new message could be our own)
     update();
   }
 });
@@ -91,7 +115,6 @@ client.on("messageDelete", message => {
 
 client.on("messageUpdate", (oldMessage, newMessage) => {
   if (oldMessage.channel === channel) {
-    console_out("odl: " + oldMessage.content + " new: " + newMessage.content);
     let i = messages.indexOf(oldMessage);
     if (i !== -1) {
       messages[i] = newMessage;
@@ -104,8 +127,12 @@ client.on("error", err => {
   console_out("[Connection error]");
 });
 
-// Functions
+// ###############
+// ## Functions ##
+// ###############
 
+// Try to assign a default channel via config
+// Returns true if done else false
 function get_default_channel() {
   if (config["default_guild"] !== null && config["default_channel"] !== null) {
     guild = client.guilds.array()[config["default_guild"]];
@@ -123,7 +150,6 @@ function get_default_channel() {
 
 // Menu that selects a channel from nothing
 function init() {
-  // Check if default guild and channel are set in config
   while (true) {
     guild = select_guild();
     if (guild === undefined) {
@@ -304,6 +330,7 @@ function clear_screen() {
   console_out("\033[H");
 }
 
+// replaces last line (which is the input line) with `msg`
 function console_out(msg) {
   readline.clearLine(process.stdout, 0);
   readline.cursorTo(process.stdout, 0, null);
@@ -311,15 +338,25 @@ function console_out(msg) {
   rl.prompt(true);
 }
 
+// ---- PART OF HACK for https://github.com/xynxynxyn/terminal-discord/issues/11 ----
+// Update the messages shown on screen. To make sure that our input is not overwritten by a message
+// we add a special `NO_SEND` string to end of current input which is unknown so we can check for a
+// string with the `NO_SEND` string at the end in 'line' event listener. This string lets us know
+// what our input was and makes us able to restore it after printing of messages.
+// Raw mode is needed to submit the full input to the listener and not only "\n" or "\r" for some unknown reason.
+// ----
 function update() {
   rl.write(NO_SEND);
+  // imitate a enter press
   process.stdin.setRawMode(true);
   rl.write(null, { name: "enter" });
+  // print messages
   messages.forEach(m => show_message(m));
+  // write previous input back into prompt
   rl.write(input);
 }
 
-// Fill messages array with messages from channel
+// Fill messages array with messages from channel and show them with `update()`
 function history() {
   n =
     config["history_length"] === null
