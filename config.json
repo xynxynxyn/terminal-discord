@@ -14,5 +14,7 @@
   "use_nickname": true,
   "select_count": 8,
   "color_support": true,
-  "show_embeds": true
+  "show_embeds": true,
+  "repeat_name": true,
+  "right_bound": false
 }

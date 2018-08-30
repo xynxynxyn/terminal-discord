@@ -35,6 +35,9 @@ The maximum length of usernames. If the value is null usernames are not cut shor
 
 If set to false the seperators will be displayed right after the username instead of them being alligned with other seperators.
 
+### right_bound
+If allign is set to true then this option controls whether names are leftbound or rightbound.
+
 ### separator
 
 Separator between username and message content.
@@ -72,6 +75,9 @@ Default color for users without a role. If not set will default to #FFFFFF.
 
 ### mention_color
 What background color the message should have when you get mentioned. Only applicable when colorsupport is enabled. Setting this to null disables the feature.
+
+### repeat_name
+When a user sends multiple messages in a row this controls whether their name should be displayed multiple times or be replaced with a dot.
 
 ### use_nickname
 Whether the nickname should be displayed when available.
