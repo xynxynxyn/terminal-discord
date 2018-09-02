@@ -347,9 +347,9 @@ function console_out(msg) {
 // ----
 function update() {
   process.stdin.setRawMode(true);
-	// move cursor to end of line
-	rl.write(null, { ctrl: "true", name: "e" })
-	// write unique identifier
+  // move cursor to end of line
+  rl.write(null, { ctrl: "true", name: "e" });
+  // write unique identifier
   rl.write(NO_SEND);
   // imitate an enter press
   rl.write(null, { name: "enter" });
