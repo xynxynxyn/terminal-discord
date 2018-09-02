@@ -346,9 +346,12 @@ function console_out(msg) {
 // Raw mode is needed to submit the full input to the listener and not only "\n" or "\r" for some unknown reason.
 // ----
 function update() {
-  rl.write(NO_SEND);
-  // imitate a enter press
   process.stdin.setRawMode(true);
+	// move cursor to end of line
+	rl.write(null, { ctrl: "true", name: "e" })
+	// write unique identifier
+  rl.write(NO_SEND);
+  // imitate an enter press
   rl.write(null, { name: "enter" });
   // print messages
   messages.forEach(m => show_message(m));
