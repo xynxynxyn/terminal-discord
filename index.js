@@ -397,14 +397,11 @@ function show_message(message) {
   }
 
   if (config["show_date"]) {
-    timestamp =
-      date.getDay() +
-      "." +
-      date.getMonth() +
-      "." +
-      date.getFullYear() +
-      " " +
-      timestamp;
+    let day = date.getDate();
+    let month = date.getMonth();
+    day = day < 10 ? "0" + day : day;
+    month = month < 9 ? "0" + (month + 1) : month + 1;
+    timestamp = day + "." + month + "." + date.getFullYear() + " " + timestamp;
   }
 
   let author = message.author.username;
