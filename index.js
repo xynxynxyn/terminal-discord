@@ -310,7 +310,7 @@ function get_config_path() {
 
       fs.writeFileSync(
         install_path + "/config.json",
-        '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true\n"repeat_name": true\n"right_bound": false\n}'
+        '{\n"token": "",\n"max_name_length": null,\n"allign": false,\n"separator": ":",\n"history_length": null,\n"default_guild": null,\n"default_channel": null,\n"mention_color": "#A52D00",\n"default_color": "#FFFFFF",\n"prompt": ">",\n"show_date": true,\n"show_time": true,\n"use_nickname": true,\n"select_count": 8,\n"color_support": true,\n"show_embeds": true,\n"repeat_name": true,\n"right_bound": false\n}'
       );
       console_out("Created a config file in " + install_path);
       return install_path + "config.json";
