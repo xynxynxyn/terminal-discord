@@ -493,7 +493,11 @@ function channel_info() {
       "\ncreated_at: " +
       channel.createdAt +
       "\ntype: " +
-      channel.type
+      channel.type +
+      "\nmemory_allocated: " +
+      Math.round((process.memoryUsage().rss / 1024 / 1024) * 100) / 100 +
+      "\nmemory_used: " +
+      Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100
   );
 }
 
