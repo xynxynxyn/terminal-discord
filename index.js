@@ -496,8 +496,10 @@ function channel_info() {
       channel.type +
       "\nmemory_allocated: " +
       Math.round((process.memoryUsage().rss / 1024 / 1024) * 100) / 100 +
+      "MB" +
       "\nmemory_used: " +
-      Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100
+      Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100 +
+      "MB"
   );
 }
 
