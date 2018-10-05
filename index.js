@@ -454,6 +454,8 @@ function show_message(message) {
     let nick;
     if (channel.type !== "dm" && channel.type !== "group") {
       nick = message.guild.me.displayName;
+    } else {
+      nick = client.user.username;
     }
     let mention_id = new RegExp(
       "@" + nick.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
