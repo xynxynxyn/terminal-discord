@@ -83,7 +83,7 @@ client.on("ready", () => {
       // to input before simulating sending of message => we will jump into body of first 'if'
       // ----
       update();
-      if (line !== "") {
+      if (line !== "" && channel_sendable(channel)) {
         // This will trigger `client.on("message", ...)`
         channel.send(line);
         rl.prompt();
@@ -193,7 +193,10 @@ function select_channel() {
     return undefined;
   }
 
-  let channel_list = guild.channels.array().filter(c => c.type === "text");
+  console_out("getting channel list ready");
+  let channel_list = guild.channels
+    .array()
+    .filter(c => c.type === "text" && !channel_readable(c));
   let channel_names = channel_list.map(c => c.name);
 
   return channel_list[select_item(channel_names)];
@@ -224,6 +227,19 @@ function select_other() {
   );
 
   return channel_list[select_item(channel_names)];
+}
+
+function channel_readable(c) {
+  if (c.type === "text") {
+    let permissions = c.memberPermissions(c.guild.me);
+    if (permissions !== undefined && permissions.has("VIEW_CHANNEL")) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
 }
 
 // Returns a object with all relevant options
@@ -478,10 +494,12 @@ function channel_info() {
   let guild_name = "";
   let guild_index = "";
   let channel_index = "";
+  let permissions = "";
   if (channel.type === "text") {
     guild_name = guild.name;
     guild_index = client.guilds.array().indexOf(guild);
     channel_index = guild.channels.array().indexOf(channel);
+    permissions = channel.memberPermissions(guild.me);
   }
   console_out(
     "Info for channel " +
@@ -503,6 +521,8 @@ function channel_info() {
       Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100 +
       "MB"
   );
+  console_out("permissions:");
+  console_out(permissions);
 }
 
 // parse and update prompt
