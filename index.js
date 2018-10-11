@@ -196,7 +196,7 @@ function select_channel() {
   console_out("getting channel list ready");
   let channel_list = guild.channels
     .array()
-    .filter(c => c.type === "text" && !channel_readable(c));
+    .filter(c => c.type === "text" && channel_readable(c));
   let channel_names = channel_list.map(c => c.name);
 
   return channel_list[select_item(channel_names)];
@@ -235,6 +235,20 @@ function channel_readable(c) {
     if (permissions !== undefined && permissions.has("VIEW_CHANNEL")) {
       return true;
     } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+}
+
+function channel_sendable(c) {
+  if (c.type === "text") {
+    let permissions = c.memberPermissions(c.guild.me);
+    if (permissions !== undefined && permissions.has("SEND_MESSAGES")) {
+      return true;
+    } else {
+      console_out("[No permission to send messages]");
       return false;
     }
   } else {
