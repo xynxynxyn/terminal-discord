@@ -508,12 +508,10 @@ function channel_info() {
   let guild_name = "";
   let guild_index = "";
   let channel_index = "";
-  let permissions = "";
   if (channel.type === "text") {
     guild_name = guild.name;
     guild_index = client.guilds.array().indexOf(guild);
     channel_index = guild.channels.array().indexOf(channel);
-    permissions = channel.memberPermissions(guild.me);
   }
   console_out(
     "Info for channel " +
@@ -535,8 +533,6 @@ function channel_info() {
       Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100 +
       "MB"
   );
-  console_out("permissions:");
-  console_out(permissions);
 }
 
 // parse and update prompt
