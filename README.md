@@ -88,6 +88,9 @@ Show the timestamp next to a message.
 ### show_date
 Enable date support to display DD.MM.YYYY in front of the time.
 
+### select_count
+How many items are displayed per page in a menu.
+
 
 ## Commands
 

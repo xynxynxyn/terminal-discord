@@ -592,7 +592,7 @@ function select_item(items) {
     return -1;
   }
 
-  const MAX_ITEMS = 8,
+  const MAX_ITEMS = config["select_count"],
     MAX_PAGE_INDEX = Math.ceil(items.length / MAX_ITEMS) - 1;
 
   let page_index = 0;
