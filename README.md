@@ -13,6 +13,8 @@ Note that the official Discord statement is only mentioning *automated user-acco
 ## Installation
 Install with `npm install -g terminal-discord`
 
+(Note to Linux users: If you run into any permissions errors while trying to install with sudo, follow the steps provided [here](http://michaelb.org/the-right-way-to-do-global-npm-install-without-sudo/)).
+
 ## Config-File
 
 The default locations for the config file are ~/.config/terminal-discord or ~/.terminal-discord. It is however also possible to pass a path to a config file like such
