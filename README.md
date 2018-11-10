@@ -6,6 +6,10 @@ A simple terminal based client for Discord using the [discord.js](https://discor
 
 If you have any questions feel free to join this [server](https://discord.gg/ZBX4Xyh). 
 
+**DISCLAIMER** Self-bots are against Discord's TOS.
+I am not responsible for any loss or restrictions relating to your account that follows from the use of this software.  
+Note that the official Discord statement is only mentioning *automated user-accounts*, so this client and similar programs are in a *grey zone*.
+
 ## Installation
 Install with `npm install -g terminal-discord`
 
