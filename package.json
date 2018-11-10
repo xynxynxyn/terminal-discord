@@ -20,6 +20,7 @@
   "bin": {
     "terminal-discord": "index.js"
   },
+  "postinstall": "node ./post-install.js",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xynxynxyn/terminal-discord/issues"
