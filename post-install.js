@@ -10,8 +10,8 @@ function generate_config() {
         configDirPath = homedir + "/.terminal-discord";
     }
     let configFilePath = configDirPath + "/config.json";
-    console.log(fs.existsSync(configDirPath))
-    console.log(fs.existsSync(configFilePath))
+    console.log("Does config directory exist: " + fs.existsSync(configDirPath))
+    console.log("Does config file exist: " + fs.existsSync(configFilePath))
     if (!fs.existsSync(configDirPath)) {
         console.log("\nGenerating config directory at " + configDirPath);
         fs.mkdirSync(configDirPath);
