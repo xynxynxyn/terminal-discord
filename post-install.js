@@ -3,7 +3,7 @@ const configObject = require("./config.json");
 function generate_config() {
   if (process.env.SUDO_UID !== undefined) {
     console.log("Script is running as root user, aborting...");
-    console.log("The program will start a config creation dialogue on first start if none exists.")
+    console.log("Please see the Installation section of the README");
     process.exit(0);
   }
   let homedir = process.env.HOME;
