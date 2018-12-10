@@ -14,6 +14,26 @@ process.stdin.setEncoding("utf8");
 process.stdout.setEncoding("utf8");
 const client = new discord.Client();
 
+const default_config = {
+  token: "",
+  max_name_length: null,
+  allign: false,
+  separator: ":",
+  history_length: null,
+  default_guild: null,
+  default_channel: null,
+  mention_color: "#A52D00",
+  default_color: "#FFFFFF",
+  prompt: ">",
+  show_date: true,
+  show_time: true,
+  use_nickname: true,
+  select_count: 8,
+  color_support: true,
+  show_embeds: true,
+  repeat_name: true,
+  right_bound: false
+};
 const config = parse_config();
 const NO_SEND = "&$&no_send";
 
@@ -257,27 +277,7 @@ function channel_sendable(c) {
 
 // Returns a object with all relevant options
 function parse_config() {
-  let config = {
-    max_name_length: null,
-    allign: false,
-    separator: ":",
-    history_length: null,
-    default_guild: null,
-    default_channel: null,
-    mention_color: "#A52D00",
-    default_color: "#FFFFFF",
-    prompt: ">",
-    show_date: true,
-    show_time: true,
-    use_nickname: true,
-    token: "",
-    select_count: 8,
-    color_support: true,
-    show_embeds: true,
-    repeat_name: true,
-    right_bound: false
-  };
-
+  let config = default_config;
   let user_config;
   let config_path = get_config_path();
   try {
@@ -336,29 +336,9 @@ function get_config_path() {
         }
         install_path = homedir + "/.terminal-discord";
       }
-      let config = {
-        max_name_length: null,
-        allign: false,
-        separator: ":",
-        history_length: null,
-        default_guild: null,
-        default_channel: null,
-        mention_color: "#A52D00",
-        default_color: "#FFFFFF",
-        prompt: ">",
-        show_date: true,
-        show_time: true,
-        use_nickname: true,
-        token: "",
-        select_count: 8,
-        color_support: true,
-        show_embeds: true,
-        repeat_name: true,
-        right_bound: false
-      };
       fs.writeFileSync(
         install_path + "/config.json",
-        JSON.stringify(config, undefined, 4)
+        JSON.stringify(default_config, undefined, 4)
       );
       console_out("Created a config file in " + install_path);
       return install_path + "config.json";
