@@ -218,12 +218,12 @@ function select_other() {
     });
   let channel_names = channel_list.map(
     c =>
-      c.type === "dm"
-        ? c.recipient.username
-        : c.recipients
-            .array()
-            .map(r => r.username)
-            .join()
+    c.type === "dm" ?
+    c.recipient.username :
+    c.recipients
+    .array()
+    .map(r => r.username)
+    .join()
   );
 
   return channel_list[select_item(channel_names)];
@@ -302,8 +302,8 @@ function parse_config() {
   if (config["token"] === "") {
     exit(
       "Config file " +
-        config_path +
-        " does not contain a token.\n Refer to the README.md for retrieving your token."
+      config_path +
+      " does not contain a token.\n Refer to the README.md for retrieving your token."
     );
   }
 
@@ -394,11 +394,18 @@ function console_out(msg) {
 function update() {
   process.stdin.setRawMode(true);
   // move cursor to end of line
-  rl.write(null, { ctrl: "true", name: "e" });
+  rl.write(null, {
+    ctrl: "true",
+    name: "e"
+  });
   // write unique identifier
   rl.write(NO_SEND);
   // imitate an enter press
-  rl.write(null, { name: "enter" });
+  rl.write(null, {
+    name: "enter"
+  });
+  // clear screen
+  clear_screen();
   // print messages
   messages.forEach(m => show_message(m));
   // write previous input back into prompt
@@ -408,9 +415,9 @@ function update() {
 // Fill messages array with messages from channel and show them with `update()`
 function history() {
   n =
-    config["history_length"] === null
-      ? process.stdout.rows
-      : config["history_length"];
+    config["history_length"] === null ?
+    process.stdout.rows :
+    config["history_length"];
   channel
     .fetchMessages({
       limit: n
@@ -463,12 +470,12 @@ function show_message(message) {
     }
   }
 
-  let attachment = config["show_embeds"]
-    ? message.attachments
-        .array()
-        .map(a => a.url)
-        .join("\n")
-    : "";
+  let attachment = config["show_embeds"] ?
+    message.attachments
+    .array()
+    .map(a => a.url)
+    .join("\n") :
+    "";
 
   if (config["max_name_length"] !== null) {
     if (author.length < config["max_name_length"] && config["allign"]) {
@@ -531,23 +538,23 @@ function channel_info() {
   }
   console_out(
     "Info for channel " +
-      channel_name() +
-      "\nguild: " +
-      guild_name +
-      "\nguild_index: " +
-      guild_index +
-      "\nchannel_index: " +
-      channel_index +
-      "\ncreated_at: " +
-      channel.createdAt +
-      "\ntype: " +
-      channel.type +
-      "\nmemory_allocated: " +
-      Math.round((process.memoryUsage().rss / 1024 / 1024) * 100) / 100 +
-      "MB" +
-      "\nmemory_used: " +
-      Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100 +
-      "MB"
+    channel_name() +
+    "\nguild: " +
+    guild_name +
+    "\nguild_index: " +
+    guild_index +
+    "\nchannel_index: " +
+    channel_index +
+    "\ncreated_at: " +
+    channel.createdAt +
+    "\ntype: " +
+    channel.type +
+    "\nmemory_allocated: " +
+    Math.round((process.memoryUsage().rss / 1024 / 1024) * 100) / 100 +
+    "MB" +
+    "\nmemory_used: " +
+    Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100 +
+    "MB"
   );
 }
 
@@ -559,9 +566,9 @@ function update_prompt() {
     .replace("%u", client.user.username)
     .replace(
       "%d",
-      channel !== null && channel !== undefined && channel.type === "text"
-        ? guild.me.displayName
-        : client.user.username
+      channel !== null && channel !== undefined && channel.type === "text" ?
+      guild.me.displayName :
+      client.user.username
     )
     .replace("%c", channel_name())
     .replace("%g", guild !== null && guild !== undefined ? guild.name : "");
@@ -645,9 +652,9 @@ function select_item(items) {
     } else if (index_next !== -1 && index === index_next) {
       page_index++;
     } else {
-      return index === -1
-        ? index
-        : index + page_index * MAX_ITEMS - (index_prev === -1 ? 0 : 1);
+      return index === -1 ?
+        index :
+        index + page_index * MAX_ITEMS - (index_prev === -1 ? 0 : 1);
     }
   }
 }
@@ -715,11 +722,11 @@ function command(cmd, arg) {
         members_list.forEach(m =>
           console_out(
             "  " +
-              m.user.presence.status.slice(0, 3) +
-              "  " +
-              (m.nickname !== null
-                ? m.nickname + " aka " + m.user.username
-                : m.user.username)
+            m.user.presence.status.slice(0, 3) +
+            "  " +
+            (m.nickname !== null ?
+              m.nickname + " aka " + m.user.username :
+              m.user.username)
           )
         );
         rl.pause();
