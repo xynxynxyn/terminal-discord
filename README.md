@@ -4,7 +4,7 @@
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API.
 
-If you have any questions feel free to join this [server](https://discord.gg/ZBX4Xyh). 
+If you have any questions feel free to join this [server](https://discord.gg/uFcg8rD). 
 
 **DISCLAIMER** Self-bots are against Discord's TOS.
 I am not responsible for any loss or restrictions relating to your account that follows from the use of this software.  
