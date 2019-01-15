@@ -32,7 +32,8 @@ const default_config = {
   color_support: true,
   show_embeds: true,
   repeat_name: true,
-  right_bound: false
+  right_bound: false,
+  block_messages: true
 };
 const config = parse_config();
 const NO_SEND = "&$&no_send";
@@ -44,6 +45,7 @@ let channel = null;
 let input = "";
 let messages = [];
 let last_message_author;
+let blocked_ids = [];
 
 clear_screen();
 console_out("Logging in...");
@@ -54,7 +56,8 @@ client.login(config["token"]);
 // ###################
 
 client.on("ready", () => {
-  console_out("User" + client.user.username + " successfully logged in");
+  console_out(client.user.username + " successfully logged in");
+  blocked_ids = client.user.blocked.array().map(user => user.id);
   update_prompt();
   // Check if default guild and channel are set in config
   if (!get_default_channel()) {
@@ -416,6 +419,10 @@ function show_message(message) {
   //emote check
   content = content.replace(/<a*:/g, "");
   content = content.replace(/\:\d*>/g, "");
+
+  if (config["block_messages"] && blocked_ids.includes(message.author.id)) {
+    content = "<blocked>";
+  }
 
   let date = message.createdAt;
   let timestamp = "";

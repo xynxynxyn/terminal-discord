@@ -97,6 +97,9 @@ Enable date support to display DD.MM.YYYY in front of the time.
 ### select_count
 How many items are displayed per page in a menu.
 
+### block_messages
+If set to true messages from blocked users are displayed as `<blocked>`
+
 
 ## Commands
 
