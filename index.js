@@ -16,7 +16,7 @@ const client = new discord.Client();
 
 const default_config = {
   token: "",
-  max_name_length: null,
+  max_name_length: 15,
   allign: false,
   separator: ":",
   history_length: null,
@@ -309,6 +309,28 @@ function parse_config() {
     );
   }
 
+  let found_inconsistency = false;
+  // Check for inconsistencies
+  if (!config["allign"] && config["right_bound"]) {
+    found_inconsistency = true;
+    config["allign"] = true;
+    console_out("[Config Error] right_bound requires allign to be true");
+    console_out("[Config Error] allign set to true");
+  }
+
+  if (config["right_bound"] && config["max_name_length"] === null) {
+    found_inconsistency = true;
+    config["max_name_length"] = default_config["max_name_length"];
+    console_out("[Config Error] right_bound requires max_name_length to be set")
+    console_out("[Config Error] max_name_length set to default value")
+  }
+
+  if (found_inconsistency) {
+    
+  rl.pause();
+  rl_sync.keyInPause(" ");
+  rl.resume();
+  }
   return config;
 }
 
