@@ -309,8 +309,9 @@ function parse_config() {
     );
   }
 
-  let found_inconsistency = false;
   // Check for inconsistencies
+  let found_inconsistency = false;
+  // allign and right_bound
   if (!config["allign"] && config["right_bound"]) {
     found_inconsistency = true;
     config["allign"] = true;
@@ -318,19 +319,23 @@ function parse_config() {
     console_out("[Config Error] allign set to true");
   }
 
+  // right_bound and max_name_length
   if (config["right_bound"] && config["max_name_length"] === null) {
     found_inconsistency = true;
     config["max_name_length"] = default_config["max_name_length"];
-    console_out("[Config Error] right_bound requires max_name_length to be set")
-    console_out("[Config Error] max_name_length set to default value")
+    console_out(
+      "[Config Error] right_bound requires max_name_length to be set"
+    );
+    console_out("[Config Error] max_name_length set to default value");
   }
 
+  // wait for userinput if inconsistency was found
   if (found_inconsistency) {
-    
-  rl.pause();
-  rl_sync.keyInPause(" ");
-  rl.resume();
+    rl.pause();
+    rl_sync.keyInPause(" ");
+    rl.resume();
   }
+
   return config;
 }
 
