@@ -46,6 +46,7 @@ let input = "";
 let messages = [];
 let last_message_author;
 let blocked_ids = [];
+let hide_blocked = config["block_messages"];
 
 clear_screen();
 console_out("Logging in...");
@@ -447,7 +448,7 @@ function show_message(message) {
   content = content.replace(/<a*:/g, "");
   content = content.replace(/\:\d*>/g, "");
 
-  if (config["block_messages"] && blocked_ids.includes(message.author.id)) {
+  if (hide_blocked && blocked_ids.includes(message.author.id)) {
     content = "<blocked>";
   }
 
@@ -612,7 +613,7 @@ function set_title(title) {
 }
 
 function cmd_complete(line) {
-  const completions = "/quit,/update,/delete,/edit ,/menu,/channel,/online,/dm,/info".split(
+  const completions = "/quit,/update,/delete,/edit ,/menu,/channel,/online,/dm,/info,/block".split(
     ","
   );
   let hits = completions.filter(c => c.startsWith(line));
@@ -769,6 +770,12 @@ function command(cmd, arg) {
       rl.pause();
       rl_sync.keyInPause(" ");
       rl.resume();
+      clear_screen();
+      update();
+      break;
+    case "b":
+    case "block":
+      hide_blocked = !hide_blocked;
       clear_screen();
       update();
       break;
