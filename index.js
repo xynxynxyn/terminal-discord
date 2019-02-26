@@ -330,6 +330,13 @@ function parse_config() {
     console_out("[Config Error] max_name_length set to default value");
   }
 
+  if (config["history_length"] > 100) {
+    console_out(
+      "[Config Error] history_length should be lower or equal to 100"
+    );
+    console_out("[Config Error] history_length set to 100");
+  }
+
   // wait for userinput if inconsistency was found
   if (found_inconsistency) {
     rl.pause();
@@ -429,7 +436,7 @@ function update() {
 function history() {
   n =
     config["history_length"] === null
-      ? process.stdout.rows
+      ? Math.min(process.stdout.rows, 100)
       : config["history_length"];
   channel
     .fetchMessages({
