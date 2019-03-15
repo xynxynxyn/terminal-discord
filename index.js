@@ -163,6 +163,15 @@ function get_default_channel() {
     if (guild !== undefined) {
       channel = guild.channels.array()[config["default_channel"]];
       if (channel !== undefined) {
+        if (channel.type === "voice") {
+          console_out("[Config Error] the default channel is a voice channel");
+          console_out("[Config Error] set both default_channel and default_guild to null again to fix");
+          console_out("[Config Error] then use the /info command to find out the channel indices");
+          rl.pause();
+          rl_sync.keyInPause(" ");
+          rl.resume();
+          return false;
+        }
         set_title("#" + channel_name());
         update_prompt();
         return true;
