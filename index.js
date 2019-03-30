@@ -591,6 +591,49 @@ function channel_info() {
   );
 }
 
+function help_info() {
+  const color = (text) => {
+    if (!config["color_support"]) {
+      return text;
+    }
+
+    return chalk.hex(config["default_color"])(text);
+  }
+
+  console_out(
+    "Enter a command while in a channel using " + color("/") + ".\n" +
+    color("q") + " or " + color("quit") +
+    ": exits the client\n" +
+    color("u") + ", " + color("update") + ", " + color("r") + ", " +
+    color("refresh") +
+    ": refresh manually\n" +
+    color("nick") +
+    ": changes your nickname\n" +
+    color("d") + ", " + color("delete") +
+    ": deletes the last sent message\n" +
+    color("e") + ", " + color("edit") +
+    ": replaces the content of your last sent message with the string after\n " +
+    color("/e") + ". Pressing tab after " + color("/edit") +
+    " fills in the previous message\n" +
+    color("c") + ", " + color("channel") +
+    ": selects a different channel within the same guild\n" +
+    color("m") + ", " + color("menu") +
+    ": opens the channel selection menu to switch to a different channel\n" +
+    color("o") + ", " + color("online") +
+    ": shows a list of currently online users\n" +
+    color("g") + ", " + color("gr") + ", " + color("group") +
+    ": opens group chat selection menu to switch to a different channel\n" +
+    color("dm") + ", " + color("pm") +
+    ": opens dm chat selection menu to switch to a different channel\n" +
+    color("i") + ", " + color("info") +
+    ": displays basic information about the channel including indices\n" +
+    color("b") + ", " + color("block") +
+    ": toggles display of blocked messages\n" +
+    color("h") + ", " + color("help") +
+    ": shows help message\n"
+  );
+}
+
 // parse and update prompt
 function update_prompt() {
   let raw_prompt = config["prompt"];
@@ -792,6 +835,15 @@ function command(cmd, arg) {
     case "b":
     case "block":
       hide_blocked = !hide_blocked;
+      clear_screen();
+      update();
+      break;
+    case "h":
+    case "help":
+      help_info();
+      rl.pause()
+      rl_sync.keyInPause(" ");
+      rl.resume();
       clear_screen();
       update();
       break;

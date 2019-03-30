@@ -126,20 +126,22 @@ Enter a command while in a channel using /.
 
 **d**, **delete**: deletes the last sent message
 
-**e**, **edit**: replace the content of your last sent message with the string after /e. Pressing tab after "/edit " fills in the previous message
+**e**, **edit**: replaces the content of your last sent message with the string after /e. Pressing tab after "/edit " fills in the previous message
 
-**c**, **channel**: select a different channel within the same guild
+**c**, **channel**: selects a different channel within the same guild
 
-**m**, **menu**: open the channel selection menu to switch to a different channel
+**m**, **menu**: opens the channel selection menu to switch to a different channel
 
-**o**, **online**: show a list of currently online users
+**o**, **online**: shows a list of currently online users
 
-**g**, **gr**, **group**: open group chat selection menu to switch to a different channel
+**g**, **gr**, **group**: opens group chat selection menu to switch to a different channel
 
-**dm**, **pm**: open dm chat selection menu to switch to a different channel
+**dm**, **pm**: opens dm chat selection menu to switch to a different channel
 
-**i**, **info**: display basic information about the channel including indices
+**i**, **info**: displays basic information about the channel including indices
 
-**b**, **block**: toggle display of blocked messages
+**b**, **block**: toggles display of blocked messages
+
+**h**, **help**: shows help message
 
 Note that edit and delete only work on messages sent in the current session. If you haven't sent a message in the current session the command will do nothing.
