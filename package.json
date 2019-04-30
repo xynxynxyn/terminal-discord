@@ -1,6 +1,6 @@
 {
   "name": "terminal-discord",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "description": "terminal discord",
   "dependencies": {
     "chalk": "^2.4.1",
