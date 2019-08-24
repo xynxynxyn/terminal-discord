@@ -165,9 +165,7 @@ function get_default_channel() {
       channel = guild.channels.array()[config["default_channel"]];
       if (channel !== undefined) {
         if (channel.type !== "text") {
-          console_out(
-            "[Config Error] the default channel is not a valid text channel"
-          );
+          console_out("[Config Error] the default channel is not a valid text channel");
           console_out(
             "[Config Error] set both default_channel and default_guild to null again to fix"
           );
@@ -430,16 +428,14 @@ function console_out(msg) {
 function update() {
   process.stdin.setRawMode(true);
   // save cursor pos
-  let old_cp = cursor_pos.sync() || { col: null };
-  let old_x = old_cpsync.col;
+  let old_x = cursor_pos.sync().col;
   // move cursor to end of line
   rl.write(null, {
     ctrl: "true",
     name: "e"
   });
   // check out new cursor pos
-  let new_cp = cursor_pos.sync() || { col: null };
-  let new_x = new_cp.col;
+  let new_x = cursor_pos.sync().col;
   // write unique identifier
   rl.write(NO_SEND);
   // imitate an enter press
@@ -453,10 +449,8 @@ function update() {
   // write previous input back into prompt
   rl.write(input);
   // move cursor back x positions to the left
-  if (old_x !== null && new_x !== null) {
-    for (let i = 0; i < new_x - old_x; i++) {
-      rl.write(null, { name: "left" });
-    }
+  for (let i = 0; i < new_x - old_x; i++) {
+    rl.write(null, { name: "left" });
   }
 }
 
