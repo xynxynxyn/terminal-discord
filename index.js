@@ -431,7 +431,7 @@ function update() {
   process.stdin.setRawMode(true);
   // save cursor pos
   let old_cp = cursor_pos.sync() || { col: null };
-  let old_x = old_cp.col;
+  let old_x = old_cpsync.col;
   // move cursor to end of line
   rl.write(null, {
     ctrl: "true",
