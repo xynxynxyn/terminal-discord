@@ -6,9 +6,9 @@ A simple terminal based client for Discord using the [discord.js](https://discor
 
 If you have any questions feel free to join this [server](https://discord.gg/uFcg8rD).
 
-**DISCLAIMER** Self-bots are against Discord's TOS.
+**DISCLAIMER** Self-bots and modified/custom clients are against Discord's TOS.
 I am not responsible for any loss or restrictions relating to your account that follows from the use of this software.  
-Note that the official Discord statement is only mentioning _automated user-accounts_, so this client and similar programs are in a _grey zone_ since they do not actually automate usage or abuse the API.
+Note that bot account clients are a grey zone so you're able to log in as a bot with a bot token, however abuse of the Discord API violates Discord Terms of Service.
 
 ## Installation
 
