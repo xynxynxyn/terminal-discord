@@ -820,6 +820,7 @@ function command(cmd, arg) {
     case "group":
       new_channel = select_other();
       channel = new_channel === undefined ? channel : new_channel;
+      update_prompt();
       clear_screen();
       history();
       break;
