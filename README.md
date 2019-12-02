@@ -16,6 +16,10 @@ Install with `npm install -g terminal-discord`
 
 (Note to Linux users: If you run into any permissions errors while trying to install with sudo, follow the steps provided [here](https://github.com/glenpike/npm-g_nosudo)).
 
+## Running on Windows
+
+Windows cannot resolve a path 
+
 ## Config-File
 
 The default locations for the config file are ~/.config/terminal-discord or ~/.terminal-discord. It is however also possible to pass a path to a config file like such

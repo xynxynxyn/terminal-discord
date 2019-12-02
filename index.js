@@ -5,6 +5,7 @@ const fs = require("fs");
 const readline = require("readline");
 const rl_sync = require("readline-sync");
 const chalk = require("chalk");
+const os = require("os");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -165,8 +166,12 @@ function get_default_channel() {
       if (channel !== undefined) {
         if (channel.type !== "text") {
           console_out("[Config Error] the default channel is a voice channel");
-          console_out("[Config Error] set both default_channel and default_guild to null again to fix");
-          console_out("[Config Error] then use the /info command to find out the channel indices");
+          console_out(
+            "[Config Error] set both default_channel and default_guild to null again to fix"
+          );
+          console_out(
+            "[Config Error] then use the /info command to find out the channel indices"
+          );
           rl.pause();
           rl_sync.keyInPause(" ");
           rl.resume();
@@ -363,7 +368,7 @@ function get_config_path() {
     return process.argv[2];
   }
 
-  let homedir = process.env.HOME;
+  let homedir = os.homedir();
   if (fs.existsSync(homedir + "/.terminal-discord/config.json")) {
     return homedir + "/.terminal-discord/config.json";
   } else if (fs.existsSync(homedir + "/.config/terminal-discord/config.json")) {
@@ -592,45 +597,78 @@ function channel_info() {
 }
 
 function help_info() {
-  const color = (text) => {
+  const color = text => {
     if (!config["color_support"]) {
       return text;
     }
 
     return chalk.hex(config["default_color"])(text);
-  }
+  };
 
   console_out(
-    "Enter a command while in a channel using " + color("/") + ".\n" +
-    color("q") + " or " + color("quit") +
-    ": exits the client\n" +
-    color("u") + ", " + color("update") + ", " + color("r") + ", " +
-    color("refresh") +
-    ": refresh manually\n" +
-    color("nick") +
-    ": changes your nickname\n" +
-    color("d") + ", " + color("delete") +
-    ": deletes the last sent message\n" +
-    color("e") + ", " + color("edit") +
-    ": replaces the content of your last sent message with the string after\n " +
-    color("/e") + ". Pressing tab after " + color("/edit") +
-    " fills in the previous message\n" +
-    color("c") + ", " + color("channel") +
-    ": selects a different channel within the same guild\n" +
-    color("m") + ", " + color("menu") +
-    ": opens the channel selection menu to switch to a different channel\n" +
-    color("o") + ", " + color("online") +
-    ": shows a list of currently online users\n" +
-    color("g") + ", " + color("gr") + ", " + color("group") +
-    ": opens group chat selection menu to switch to a different channel\n" +
-    color("dm") + ", " + color("pm") +
-    ": opens dm chat selection menu to switch to a different channel\n" +
-    color("i") + ", " + color("info") +
-    ": displays basic information about the channel including indices\n" +
-    color("b") + ", " + color("block") +
-    ": toggles display of blocked messages\n" +
-    color("h") + ", " + color("help") +
-    ": shows help message\n"
+    "Enter a command while in a channel using " +
+      color("/") +
+      ".\n" +
+      color("q") +
+      " or " +
+      color("quit") +
+      ": exits the client\n" +
+      color("u") +
+      ", " +
+      color("update") +
+      ", " +
+      color("r") +
+      ", " +
+      color("refresh") +
+      ": refresh manually\n" +
+      color("nick") +
+      ": changes your nickname\n" +
+      color("d") +
+      ", " +
+      color("delete") +
+      ": deletes the last sent message\n" +
+      color("e") +
+      ", " +
+      color("edit") +
+      ": replaces the content of your last sent message with the string after\n " +
+      color("/e") +
+      ". Pressing tab after " +
+      color("/edit") +
+      " fills in the previous message\n" +
+      color("c") +
+      ", " +
+      color("channel") +
+      ": selects a different channel within the same guild\n" +
+      color("m") +
+      ", " +
+      color("menu") +
+      ": opens the channel selection menu to switch to a different channel\n" +
+      color("o") +
+      ", " +
+      color("online") +
+      ": shows a list of currently online users\n" +
+      color("g") +
+      ", " +
+      color("gr") +
+      ", " +
+      color("group") +
+      ": opens group chat selection menu to switch to a different channel\n" +
+      color("dm") +
+      ", " +
+      color("pm") +
+      ": opens dm chat selection menu to switch to a different channel\n" +
+      color("i") +
+      ", " +
+      color("info") +
+      ": displays basic information about the channel including indices\n" +
+      color("b") +
+      ", " +
+      color("block") +
+      ": toggles display of blocked messages\n" +
+      color("h") +
+      ", " +
+      color("help") +
+      ": shows help message\n"
   );
 }
 
@@ -842,7 +880,7 @@ function command(cmd, arg) {
     case "h":
     case "help":
       help_info();
-      rl.pause()
+      rl.pause();
       rl_sync.keyInPause(" ");
       rl.resume();
       clear_screen();
