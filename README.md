@@ -18,7 +18,7 @@ Install with `npm install -g terminal-discord`
 
 ## Running on Windows
 
-Windows cannot resolve a path 
+If windows cannot resolve the path for the home directory (when it gives something like `undefined/.terminal-discord` not found) then provide the config file as an argument as described below.
 
 ## Config-File
 
