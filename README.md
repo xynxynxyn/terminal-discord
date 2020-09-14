@@ -1,5 +1,7 @@
 # Terminal-Discord
 
+**NOT MAINTAINED ANYMORE**
+
 ![terminal-discord](scrot.png)
 
 A simple terminal based client for Discord using the [discord.js](https://discord.js.org) API with a minimal look and UI.
