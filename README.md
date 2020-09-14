@@ -1,6 +1,6 @@
 # Terminal-Discord
 
-**NOT MAINTAINED ANYMORE**
+**DEPRECATED/NOT MAINTAINED ANYMORE** use [cordless](https://github.com/Bios-Marcel/cordless) instead.
 
 ![terminal-discord](scrot.png)
 
